@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from '@mui/material/Container'
 import { Header } from './components/header/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -6,10 +6,19 @@ import { Auth } from './pages/Auth'
 import { LoginForm } from './components/login/LoginForm'
 import { SignUpForm } from './components/signup/SignUpForm'
 import { Welcome } from './pages/Welcome'
+import { Home } from './pages/Home'
+import { GlobalContext } from './contexts/GlobalContext'
+import { Locales, Themes } from './models/GlobalContextModel'
 
 function App() {
+  const [theme, setTheme] = useState<Themes>(
+    (localStorage.getItem('theme') as Themes) || Themes.Light,
+  )
+  const [locale, setLocale] = useState<Locales>(
+    (localStorage.getItem('locale') as Locales) || Locales.EN,
+  )
   return (
-    <>
+    <GlobalContext.Provider value={{ theme, setTheme, locale, setLocale }}>
       <BrowserRouter>
         <Header />
         <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -19,14 +28,11 @@ function App() {
               <Route path='login' element={<LoginForm />} />
               <Route path='signup' element={<SignUpForm />} />
             </Route>
-            {/* <Route path='posts' element={<Posts />}>
-            <Route path='new' element={<NewPost />} />
-            <Route path=':postId' element={<Post />} />
-          </Route> */}
+            <Route path='home' element={<Home />} />
           </Routes>
         </Container>
       </BrowserRouter>
-    </>
+    </GlobalContext.Provider>
   )
 }
 
