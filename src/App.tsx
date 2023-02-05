@@ -11,6 +11,7 @@ import { GlobalContext } from './contexts/GlobalContext'
 import { Locales, Themes } from './models/GlobalContextModel'
 import { Provider } from 'react-redux'
 import store from './store'
+import { AdminPage } from './pages/AdminPage'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -24,7 +25,10 @@ function App() {
       <GlobalContext.Provider value={{ theme, setTheme, locale, setLocale }}>
         <BrowserRouter>
           <Header />
-          <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Container
+            maxWidth='lg'
+            sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}
+          >
             <Routes>
               <Route path='/' element={<Welcome />} />
               <Route path='auth' element={<Auth />}>
@@ -32,6 +36,7 @@ function App() {
                 <Route path='signup' element={<SignUpForm />} />
               </Route>
               <Route path='home' element={<Home />} />
+              <Route path='adminPage' element={<AdminPage />} />
             </Routes>
           </Container>
         </BrowserRouter>
