@@ -1,32 +1,36 @@
 import React from 'react'
 import { Alert, Box, Button, CircularProgress, Stack, TextField } from '@mui/material'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
-import { signUp } from '../../store/slices/authSlice'
+import { logIn } from '../../store/slices/authSlice'
+import { useNavigate } from 'react-router-dom'
 
-type SignUpInputs = {
+type LoginInputs = {
   username: string
-  email: string
   password: string
 }
 
-export const SignUpForm: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const { isAuth, user, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
 
   const {
     control,
     handleSubmit,
     formState: { isValid },
-  } = useForm<SignUpInputs>({
+  } = useForm<LoginInputs>({
     defaultValues: {
       username: '',
-      email: '',
       password: '',
     },
   })
 
-  const onSubmit: SubmitHandler<SignUpInputs> = (fields) => dispatch(signUp(fields))
+  const onSubmit: SubmitHandler<LoginInputs> = (fields) => dispatch(logIn(fields))
+
+  if (isAuth) navigate('/home')
+
   return (
     <Stack
       py={4}
@@ -38,27 +42,9 @@ export const SignUpForm: React.FC = () => {
       <Controller
         name='username'
         control={control}
-        rules={{
-          required: true,
-          minLength: { value: 3, message: 'Username min Length 3' },
-          maxLength: { value: 15, message: 'Username max Length 15' },
-        }}
-        render={({ field }) => (
-          <TextField {...field} label='Username' variant='outlined' autoComplete='off' />
-        )}
-      />
-      <Controller
-        name='email'
-        control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <TextField
-            {...field}
-            label='Email'
-            variant='outlined'
-            type={'email'}
-            autoComplete='off'
-          />
+          <TextField {...field} label='Username' variant='outlined' autoComplete='off' />
         )}
       />
       <Controller
@@ -92,10 +78,10 @@ export const SignUpForm: React.FC = () => {
             alignItems: 'center',
           }}
         >
-          <CircularProgress size={50} />
+          <CircularProgress size={80} />
         </Box>
       )}
-      {error && <Alert severity='error'>error</Alert>}
+      {error && <Alert severity='error'>{error}</Alert>}
     </Stack>
   )
 }
