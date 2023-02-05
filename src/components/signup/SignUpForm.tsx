@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Box, Button, CircularProgress, Stack, TextField } from '@mui/material'
+import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice'
@@ -11,7 +11,7 @@ type SignUpInputs = {
 }
 
 export const SignUpForm: React.FC = () => {
-  const { isAuth, user, isLoading, error } = useAppSelector((state) => state.auth)
+  const { isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const {
@@ -35,6 +35,9 @@ export const SignUpForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       sx={{ position: 'relative' }}
     >
+      <Typography variant='h4' component='h4' textAlign={'center'}>
+        Registration
+      </Typography>
       <Controller
         name='username'
         control={control}
@@ -95,7 +98,7 @@ export const SignUpForm: React.FC = () => {
           <CircularProgress size={50} />
         </Box>
       )}
-      {error && <Alert severity='error'>error</Alert>}
+      {error && <Alert severity='error'>error.message</Alert>}
     </Stack>
   )
 }

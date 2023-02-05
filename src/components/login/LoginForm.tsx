@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Box, Button, CircularProgress, Stack, TextField } from '@mui/material'
+import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { logIn } from '../../store/slices/authSlice'
@@ -11,7 +11,7 @@ type LoginInputs = {
 }
 
 export const LoginForm: React.FC = () => {
-  const { isAuth, user, isLoading, error } = useAppSelector((state) => state.auth)
+  const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
@@ -39,6 +39,9 @@ export const LoginForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       sx={{ position: 'relative' }}
     >
+      <Typography variant='h4' component='h4' textAlign={'center'}>
+        Authorization
+      </Typography>
       <Controller
         name='username'
         control={control}
@@ -81,7 +84,7 @@ export const LoginForm: React.FC = () => {
           <CircularProgress size={80} />
         </Box>
       )}
-      {error && <Alert severity='error'>{error}</Alert>}
+      {error && <Alert severity='error'>{error.message}</Alert>}
     </Stack>
   )
 }
