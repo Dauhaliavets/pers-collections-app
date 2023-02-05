@@ -9,6 +9,8 @@ import { Welcome } from './pages/Welcome'
 import { Home } from './pages/Home'
 import { GlobalContext } from './contexts/GlobalContext'
 import { Locales, Themes } from './models/GlobalContextModel'
+import { Provider } from 'react-redux'
+import store from './store'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -18,21 +20,23 @@ function App() {
     (localStorage.getItem('locale') as Locales) || Locales.EN,
   )
   return (
-    <GlobalContext.Provider value={{ theme, setTheme, locale, setLocale }}>
-      <BrowserRouter>
-        <Header />
-        <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Routes>
-            <Route path='/' element={<Welcome />} />
-            <Route path='auth' element={<Auth />}>
-              <Route path='login' element={<LoginForm />} />
-              <Route path='signup' element={<SignUpForm />} />
-            </Route>
-            <Route path='home' element={<Home />} />
-          </Routes>
-        </Container>
-      </BrowserRouter>
-    </GlobalContext.Provider>
+    <Provider store={store}>
+      <GlobalContext.Provider value={{ theme, setTheme, locale, setLocale }}>
+        <BrowserRouter>
+          <Header />
+          <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Routes>
+              <Route path='/' element={<Welcome />} />
+              <Route path='auth' element={<Auth />}>
+                <Route path='login' element={<LoginForm />} />
+                <Route path='signup' element={<SignUpForm />} />
+              </Route>
+              <Route path='home' element={<Home />} />
+            </Routes>
+          </Container>
+        </BrowserRouter>
+      </GlobalContext.Provider>
+    </Provider>
   )
 }
 
