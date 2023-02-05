@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
-import { logIn } from '../../store/slices/authSlice'
+import { logIn } from '../../store/slices/authSlice/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 type LoginInputs = {

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../../contexts/GlobalContext'
 import { Locales, Themes, TLocale } from '../../models/GlobalContextModel'
 import { useAppDispatch, useAppSelector } from '../../store'
-import { logOut } from '../../store/slices/authSlice'
+import { logOut } from '../../store/slices/authSlice/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 import { MaterialUISwitch } from '../material/switch/switch'

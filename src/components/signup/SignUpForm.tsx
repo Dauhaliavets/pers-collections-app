@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
-import { signUp } from '../../store/slices/authSlice'
+import { signUp } from '../../store/slices/authSlice/authSlice'
 
 type SignUpInputs = {
   username: string
