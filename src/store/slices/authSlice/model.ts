@@ -1,4 +1,5 @@
-interface IUser {
+interface IAuthUser {
+  id: string
   username: string
   role: 'ADMIN' | 'USER'
   token: string
@@ -6,7 +7,7 @@ interface IUser {
 
 interface AuthState {
   isAuth: boolean
-  user: IUser | null
+  user: IAuthUser | null
   isLoading: boolean
   error: { message: string } | null
 }
@@ -22,4 +23,4 @@ type SignUpRequest = {
   password: string
 }
 
-export type { IUser, AuthState, LoginRequest, SignUpRequest }
+export type { IAuthUser, AuthState, LoginRequest, SignUpRequest }
