@@ -1,5 +1,5 @@
 interface IUser {
-  _id: string
+  id: string
   username: string
   email: string
   blockedStatus: boolean
@@ -29,7 +29,7 @@ interface DeleteUserByIdRequest {
 interface UpdateUserByIdRequest {
   id: string
   token: string
-  newBody: IUser
+  newBody: Partial<IUser>
 }
 
 export type {

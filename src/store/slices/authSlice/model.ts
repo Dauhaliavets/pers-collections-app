@@ -1,7 +1,12 @@
+enum Role {
+  Admin = 'ADMIN',
+  User = 'USER',
+}
+
 interface IAuthUser {
   id: string
   username: string
-  role: 'ADMIN' | 'USER'
+  role: Role
   token: string
 }
 
@@ -23,4 +28,5 @@ type SignUpRequest = {
   password: string
 }
 
+export { Role }
 export type { IAuthUser, AuthState, LoginRequest, SignUpRequest }
