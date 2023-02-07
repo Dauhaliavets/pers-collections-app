@@ -44,7 +44,7 @@ export const fetchUserById = createAsyncThunk<
   { rejectValue: { message: string } }
 >('users/fetchById', async ({ id, token }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_URL}user/${id}`, {
+    const response = await fetch(`${API_URL}users/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ export const deleteUserById = createAsyncThunk<
   { rejectValue: { message: string } }
 >('users/deleteById', async ({ id, token }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_URL}user/${id}`, {
+    const response = await fetch(`${API_URL}users/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export const updateUserById = createAsyncThunk<
   { rejectValue: { message: string } }
 >('users/updateById', async ({ id, token, newBody }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_URL}user/${id}`, {
+    const response = await fetch(`${API_URL}users/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -127,12 +127,12 @@ const usersSlice = createSlice({
         state.error = null
       })
       .addCase(deleteUserById.fulfilled, (state, { payload }) => {
-        state.users = state.users.filter((user) => user._id !== payload._id)
+        state.users = state.users.filter((user) => user.id !== payload.id)
         state.isLoading = false
         state.error = null
       })
       .addCase(updateUserById.fulfilled, (state, { payload }) => {
-        state.users = state.users.map((user) => (user._id === payload._id ? payload : user))
+        state.users = state.users.map((user) => (user.id === payload.id ? payload : user))
         state.isLoading = false
         state.error = null
       })
