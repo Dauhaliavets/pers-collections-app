@@ -25,7 +25,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import SettingsIcon from '@mui/icons-material/Settings'
+import MenuIcon from '@mui/icons-material/Menu'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import HowToRegIcon from '@mui/icons-material/HowToReg'
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const { theme, setTheme, locale, setLocale } = useContext(GlobalContext)
-  const { isAuth } = useAppSelector((state) => state.auth)
+  const { isAuth, user } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
@@ -68,10 +68,12 @@ const Header: React.FC = () => {
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            LOGO
+            Collections
           </Typography>
           <MaterialUISearch />
-          <SettingsIcon sx={{ marginLeft: '10px' }} onClick={toggleDrawer(true)} />
+          <IconButton sx={{ marginLeft: '10px' }} onClick={toggleDrawer(true)}>
+            <MenuIcon />
+          </IconButton>
           <Drawer anchor={'right'} open={isOpen} onClose={toggleDrawer(false)}>
             <Box
               sx={{ width: 250, display: 'flex', flexDirection: 'column' }}
@@ -83,6 +85,21 @@ const Header: React.FC = () => {
                   <ChevronRightIcon />
                 </IconButton>
               </DrawerHeader>
+              <Divider />
+              <List>
+                <ListItem disablePadding onClick={toggleDrawer(false)}>
+                  <ListItemButton onClick={() => navigate('/collections')}>
+                    <ListItemText primary={'Collections'} />
+                  </ListItemButton>
+                </ListItem>
+                {user && user.role === 'ADMIN' && (
+                  <ListItem disablePadding onClick={toggleDrawer(false)}>
+                    <ListItemButton onClick={() => navigate('/users')}>
+                      <ListItemText primary={'Users'} />
+                    </ListItemButton>
+                  </ListItem>
+                )}
+              </List>
               <Divider />
               <List sx={{ padding: '8px 16px' }}>
                 <ListItem disablePadding>
@@ -110,7 +127,12 @@ const Header: React.FC = () => {
               {isAuth ? (
                 <List>
                   <ListItem disablePadding onClick={toggleDrawer(false)}>
-                    <ListItemButton onClick={() => dispatch(logOut())}>
+                    <ListItemButton
+                      onClick={() => {
+                        navigate('/')
+                        dispatch(logOut())
+                      }}
+                    >
                       <ListItemIcon>
                         <LogoutIcon />
                       </ListItemIcon>

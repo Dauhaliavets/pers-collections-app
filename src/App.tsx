@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import Container from '@mui/material/Container'
-import { Header } from './components/header/Header'
+import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Auth } from './pages/Auth'
+import { Locales, Themes } from './models/GlobalContextModel'
+import { GlobalContext } from './contexts/GlobalContext'
+import store from './store'
+import { Header } from './components/header/Header'
 import { LoginForm } from './components/login/LoginForm'
 import { SignUpForm } from './components/signup/SignUpForm'
+import { Users } from './pages/Users'
+import { Auth } from './pages/Auth'
 import { Welcome } from './pages/Welcome'
-import { Home } from './pages/Home'
-import { GlobalContext } from './contexts/GlobalContext'
-import { Locales, Themes } from './models/GlobalContextModel'
-import { Provider } from 'react-redux'
-import store from './store'
-import { AdminPage } from './pages/AdminPage'
+import { Collections } from './pages/Home'
+import Container from '@mui/material/Container'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -35,8 +35,8 @@ function App() {
                 <Route path='login' element={<LoginForm />} />
                 <Route path='signup' element={<SignUpForm />} />
               </Route>
-              <Route path='home' element={<Home />} />
-              <Route path='adminPage' element={<AdminPage />} />
+              <Route path='collections' element={<Collections />} />
+              <Route path='users' element={<Users />} />
             </Routes>
           </Container>
         </BrowserRouter>

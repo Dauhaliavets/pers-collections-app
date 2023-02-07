@@ -1,8 +1,10 @@
 import React from 'react'
-import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material'
+import { Alert, Button, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice/authSlice'
+import { Spinner } from '../spinner/Spinner'
+import { useNavigate } from 'react-router-dom'
 
 type SignUpInputs = {
   username: string
@@ -11,8 +13,9 @@ type SignUpInputs = {
 }
 
 export const SignUpForm: React.FC = () => {
-  const { isLoading, error } = useAppSelector((state) => state.auth)
+  const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const {
     control,
@@ -27,6 +30,11 @@ export const SignUpForm: React.FC = () => {
   })
 
   const onSubmit: SubmitHandler<SignUpInputs> = (fields) => dispatch(signUp(fields))
+
+  React.useEffect(() => {
+    if (isAuth) navigate('/home')
+  }, [isAuth])
+
   return (
     <Stack
       py={4}
@@ -81,23 +89,7 @@ export const SignUpForm: React.FC = () => {
       <Button variant='contained' type='submit' disabled={!isValid}>
         Login
       </Button>
-      {isLoading && (
-        <Box
-          sx={{
-            backgroundColor: '#FFFFFF33',
-            position: 'absolute',
-            top: '0',
-            left: 0,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <CircularProgress size={50} />
-        </Box>
-      )}
+      {isLoading && <Spinner />}
       {error && <Alert severity='error'>error.message</Alert>}
     </Stack>
   )
