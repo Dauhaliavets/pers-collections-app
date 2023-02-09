@@ -30,7 +30,7 @@ export const LoginForm: React.FC = () => {
   const onSubmit: SubmitHandler<LoginInputs> = (fields) => dispatch(logIn(fields))
 
   React.useEffect(() => {
-    if (isAuth) navigate('/home')
+    if (isAuth) navigate('/collections')
   }, [isAuth])
 
   return (

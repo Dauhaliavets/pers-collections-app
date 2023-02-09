@@ -10,8 +10,9 @@ import { SignUpForm } from './components/signup/SignUpForm'
 import { Users } from './pages/Users'
 import { Auth } from './pages/Auth'
 import { Welcome } from './pages/Welcome'
-import { Collections } from './pages/Home'
+import { Collections } from './pages/Collections'
 import Container from '@mui/material/Container'
+import { CreateCollection } from './components/createCollection/CreateCollection'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -36,6 +37,7 @@ function App() {
                 <Route path='signup' element={<SignUpForm />} />
               </Route>
               <Route path='collections' element={<Collections />} />
+              <Route path='collections/create' element={<CreateCollection />} />
               <Route path='users' element={<Users />} />
             </Routes>
           </Container>

@@ -32,7 +32,7 @@ export const SignUpForm: React.FC = () => {
   const onSubmit: SubmitHandler<SignUpInputs> = (fields) => dispatch(signUp(fields))
 
   React.useEffect(() => {
-    if (isAuth) navigate('/home')
+    if (isAuth) navigate('/collections')
   }, [isAuth])
 
   return (
