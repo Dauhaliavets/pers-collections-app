@@ -1,8 +1,9 @@
-/* eslint-disable camelcase */
 import React from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import {
   Box,
   Button,
+  Checkbox,
   Grid,
   IconButton,
   MenuItem,
@@ -14,23 +15,23 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import ReactMarkdown from 'react-markdown'
 import { TabPanel } from '../material/tabPanel/tabPanel'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { topics } from '../../constants/topics'
 import { ElementSwitcher } from '../elementSwitcher/ElementSwitcher'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ReactMarkdown from 'react-markdown'
 import { DialogMenu } from './DialogMenu'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
+import { topics } from '../../constants/topics'
+import { DropZone } from './DropZone'
 
 type CollectionForm = {
   title: string
   description: string
   topic: string
-  imageSrc: string
 }
 
 export const CreateCollection: React.FC = () => {
+  const [imgUrl, setImgUrl] = React.useState<string | null>(null)
   const [tabValue, setTabValue] = React.useState(0)
   const {
     additionalFields,
@@ -48,7 +49,6 @@ export const CreateCollection: React.FC = () => {
       title: '',
       description: '',
       topic: '',
-      imageSrc: '',
     },
   })
 
@@ -157,7 +157,7 @@ export const CreateCollection: React.FC = () => {
             </Typography>
           </Grid>
           <Grid item xs={10}>
-            {/* <Typography>Title:</Typography> */}
+            <DropZone imgUrl={imgUrl} setImgUrl={setImgUrl} />
           </Grid>
           <Grid item xs={10}>
             <Button variant='contained' type='submit' disabled={!isValid}>
@@ -192,9 +192,8 @@ export const CreateCollection: React.FC = () => {
               >
                 <ElementSwitcher field={field} handleChange={handleChangeAdditionalField} />
                 <Box>
-                  <input
+                  <Checkbox
                     id='isVisibleField'
-                    type={'checkbox'}
                     checked={field.visible}
                     onChange={(e) => handleChangeIsVisible(e, field.id)}
                   />
