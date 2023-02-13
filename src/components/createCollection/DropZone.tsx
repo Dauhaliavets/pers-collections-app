@@ -5,8 +5,8 @@ import { Box, Typography, Alert, CircularProgress } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 
 interface IDropZoneProps {
-  imgUrl: string | null
-  setImgUrl: React.Dispatch<React.SetStateAction<string | null>>
+  imgUrl: string
+  setImgUrl: React.Dispatch<React.SetStateAction<string>>
 }
 export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
   const [isLoadingImg, setIsLoadingImg] = React.useState<boolean>(false)
@@ -18,7 +18,7 @@ export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
     if (!file) return
 
     setIsLoadingImg(true)
-    setImgUrl(null)
+    setImgUrl('')
     setError(null)
 
     try {

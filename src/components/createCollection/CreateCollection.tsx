@@ -23,6 +23,8 @@ import { DialogMenu } from './DialogMenu'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
 import { topics } from '../../constants/topics'
 import { DropZone } from './DropZone'
+import { useAppDispatch, useAppSelector } from '../../store'
+import { createCollection } from '../../store/slices/collectionsSlice/collectionsSlice'
 
 type CollectionForm = {
   title: string
@@ -31,7 +33,7 @@ type CollectionForm = {
 }
 
 export const CreateCollection: React.FC = () => {
-  const [imgUrl, setImgUrl] = React.useState<string | null>(null)
+  const [imgUrl, setImgUrl] = React.useState<string>('')
   const [tabValue, setTabValue] = React.useState(0)
   const {
     additionalFields,
@@ -39,7 +41,7 @@ export const CreateCollection: React.FC = () => {
     handleChangeIsVisible,
     handleDeleteField,
     createAdditionalField,
-  } = useAdditionalFields()
+  } = useAdditionalFields([])
   const {
     control,
     handleSubmit,
@@ -51,10 +53,19 @@ export const CreateCollection: React.FC = () => {
       topic: '',
     },
   })
+  const { user } = useAppSelector((state) => state.auth)
+
+  const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<CollectionForm> = (formData) => {
-    console.log('formData', formData)
-    console.log('fields: ', additionalFields)
+    const newCollection = {
+      ...formData,
+      ownerId: user?.id as string,
+      imageUrl: imgUrl,
+      extraFields: additionalFields,
+    }
+
+    dispatch(createCollection({ token: user?.token as string, body: newCollection }))
   }
 
   const handleChangeTabValue = (event: React.SyntheticEvent, newValue: number) => {

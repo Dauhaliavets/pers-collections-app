@@ -2,8 +2,8 @@ import React from 'react'
 import { IAdditionalField } from '../models/additionalField.model'
 import uuid from 'react-uuid'
 
-const useAdditionalFields = () => {
-  const [additionalFields, setAdditionalFields] = React.useState<IAdditionalField[]>([])
+const useAdditionalFields = (defaultFields: IAdditionalField[]) => {
+  const [additionalFields, setAdditionalFields] = React.useState<IAdditionalField[]>(defaultFields)
 
   const createAdditionalField = (fieldType: string, fieldLabel: string) => {
     const newField: IAdditionalField = {
@@ -26,11 +26,12 @@ const useAdditionalFields = () => {
       if (fieldId === id) {
         switch (type) {
           case 'checkbox':
-            field.value = (event as React.ChangeEvent<HTMLInputElement>).target.checked
-            return field
+            return {
+              ...field,
+              value: (event as React.ChangeEvent<HTMLInputElement>).target.checked,
+            }
           default:
-            field.value = event.target.value
-            return field
+            return { ...field, value: event.target.value }
         }
       } else {
         return field

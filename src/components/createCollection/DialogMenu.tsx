@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import { additionalFields } from '../../constants/additionalFileds'
 import { useDialogMenu } from '../../hooks/useDialogMenu'
-// import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
 
 interface IDialogMenuProps {
   createAdditionalField: (fieldType: string, fieldLabel: string) => void
@@ -29,8 +28,6 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
     handleOpenDialogMenu,
     handleCloseDialogMenu,
   } = useDialogMenu()
-
-  // const { createAdditionalField } = useAdditionalFields()
 
   return (
     <>

@@ -38,6 +38,7 @@ export const ElementSwitcher: React.FC<TElementSwitcherProps> = ({ field, handle
           <Checkbox
             id={field.id}
             checked={field.value as boolean}
+            value={field.value as boolean}
             onChange={(event) => handleChange(field.id, event)}
           />
         </Box>
