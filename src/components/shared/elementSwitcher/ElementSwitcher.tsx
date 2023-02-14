@@ -1,6 +1,6 @@
 import { Box, Checkbox, TextareaAutosize, TextField } from '@mui/material'
 import React from 'react'
-import { IAdditionalField } from '../../models/additionalField.model'
+import { IAdditionalField } from '../../../models/additionalField.model'
 
 type TElementSwitcherProps = {
   field: IAdditionalField
@@ -37,8 +37,7 @@ export const ElementSwitcher: React.FC<TElementSwitcherProps> = ({ field, handle
           </label>
           <Checkbox
             id={field.id}
-            checked={field.value as boolean}
-            value={field.value as boolean}
+            checked={!!field.value as boolean}
             onChange={(event) => handleChange(field.id, event)}
           />
         </Box>

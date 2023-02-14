@@ -68,7 +68,7 @@ const Header: React.FC = () => {
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            Collections
+            LOGO
           </Typography>
           <MaterialUISearch />
           <IconButton sx={{ marginLeft: '10px' }} onClick={toggleDrawer(true)}>

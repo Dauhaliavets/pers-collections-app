@@ -24,7 +24,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import { AntSwitch } from '../components/material/switch/switch'
 
-export const Users: React.FC = () => {
+export const AdminPage: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth)
   const { users, isLoading, error } = useAppSelector((state) => state.users)
   const dispatch = useAppDispatch()

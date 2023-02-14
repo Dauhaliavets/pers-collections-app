@@ -15,16 +15,17 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { TabPanel } from '../material/tabPanel/tabPanel'
-import { ElementSwitcher } from '../elementSwitcher/ElementSwitcher'
+import { TabPanel } from '../components/material/tabPanel/tabPanel'
+import { ElementSwitcher } from '../components/shared/elementSwitcher/ElementSwitcher'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ReactMarkdown from 'react-markdown'
-import { DialogMenu } from './DialogMenu'
-import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
-import { topics } from '../../constants/topics'
-import { DropZone } from './DropZone'
-import { useAppDispatch, useAppSelector } from '../../store'
-import { createCollection } from '../../store/slices/collectionsSlice/collectionsSlice'
+import { DialogMenu } from '../components/createCollection/DialogMenu'
+import { useAdditionalFields } from '../hooks/useAdditionalFileds'
+import { topics } from '../constants/topics'
+import { DropZone } from '../components/createCollection/DropZone'
+import { useAppDispatch, useAppSelector } from '../store'
+import { createCollection } from '../store/slices/collectionsSlice/collectionsSlice'
+import { useNavigate } from 'react-router-dom'
 
 type CollectionForm = {
   title: string
@@ -56,6 +57,7 @@ export const CreateCollection: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth)
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<CollectionForm> = (formData) => {
     const newCollection = {
@@ -66,6 +68,7 @@ export const CreateCollection: React.FC = () => {
     }
 
     dispatch(createCollection({ token: user?.token as string, body: newCollection }))
+    navigate(-1)
   }
 
   const handleChangeTabValue = (event: React.SyntheticEvent, newValue: number) => {

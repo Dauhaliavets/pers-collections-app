@@ -3,7 +3,7 @@ import { Alert, Button, Stack, TextField, Typography } from '@mui/material'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice/authSlice'
-import { Spinner } from '../spinner/Spinner'
+import { Spinner } from '../shared/spinner/Spinner'
 import { useNavigate } from 'react-router-dom'
 
 type SignUpInputs = {

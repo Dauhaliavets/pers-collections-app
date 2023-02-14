@@ -4,7 +4,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { logIn } from '../../store/slices/authSlice/authSlice'
 import { useNavigate } from 'react-router-dom'
-import { Spinner } from '../spinner/Spinner'
+import { Spinner } from '../shared/spinner/Spinner'
 
 type LoginInputs = {
   username: string

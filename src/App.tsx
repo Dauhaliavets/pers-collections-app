@@ -4,15 +4,20 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Locales, Themes } from './models/GlobalContextModel'
 import { GlobalContext } from './contexts/GlobalContext'
 import store from './store'
+
 import { Header } from './components/header/Header'
-import { LoginForm } from './components/login/LoginForm'
-import { SignUpForm } from './components/signup/SignUpForm'
-import { Users } from './pages/Users'
 import { Auth } from './pages/Auth'
+import { LoginForm } from './components/auth/LoginForm'
+import { SignUpForm } from './components/auth/SignUpForm'
+import { AdminPage } from './pages/AdminPage'
 import { Welcome } from './pages/Welcome'
 import { Collections } from './pages/Collections'
+import { CreateCollection } from './pages/CreateCollection'
+import { CollectionDetails } from './pages/CollectionDetails'
+import { CreateCollectionItem } from './pages/CreateCollectionItem'
+import { EditCollectionItem } from './pages/EditCollectionItem'
+
 import Container from '@mui/material/Container'
-import { CreateCollection } from './components/createCollection/CreateCollection'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -38,7 +43,16 @@ function App() {
               </Route>
               <Route path='collections' element={<Collections />} />
               <Route path='collections/create' element={<CreateCollection />} />
-              <Route path='users' element={<Users />} />
+              <Route path='collections/:collectionId' element={<CollectionDetails />} />
+              <Route
+                path='collections/:collectionId/createItem'
+                element={<CreateCollectionItem />}
+              />
+              <Route
+                path='collections/:collectionId/items/:itemId/edit'
+                element={<EditCollectionItem />}
+              />
+              <Route path='users' element={<AdminPage />} />
             </Routes>
           </Container>
         </BrowserRouter>
