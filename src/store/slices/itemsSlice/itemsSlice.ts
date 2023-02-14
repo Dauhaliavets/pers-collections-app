@@ -42,7 +42,7 @@ export const fetchItemsByCollectionId = createAsyncThunk<
   { rejectValue: { message: string } }
 >('items/fetchItemsByCollectionId', async ({ id }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_URL}items/${id}`, {
+    const response = await fetch(`${API_URL}items/collectionId/${id}`, {
       headers: {
         'Content-Type': 'application/json',
       },
