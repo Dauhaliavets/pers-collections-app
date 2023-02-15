@@ -4,6 +4,7 @@ import {
   DeleteUserByIdRequest,
   FetchUserByIdRequest,
   FetchUsersRequest,
+  IRejectValue,
   IUser,
   UpdateUserByIdRequest,
   UsersState,
@@ -18,7 +19,7 @@ const initialState: UsersState = {
 export const fetchUsers = createAsyncThunk<
   IUser[],
   FetchUsersRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('users/fetchAll', async ({ token }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}users`, {
@@ -28,10 +29,10 @@ export const fetchUsers = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const user = (await (response as Response).json()) as IUser[]
+    const user = (await response.json()) as IUser[]
     return user
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching users' })
@@ -41,7 +42,7 @@ export const fetchUsers = createAsyncThunk<
 export const fetchUserById = createAsyncThunk<
   IUser,
   FetchUserByIdRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('users/fetchById', async ({ id, token }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}users/${id}`, {
@@ -51,10 +52,10 @@ export const fetchUserById = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const user = (await (response as Response).json()) as IUser
+    const user = (await response.json()) as IUser
     return user
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching User By ID' })
@@ -64,7 +65,7 @@ export const fetchUserById = createAsyncThunk<
 export const deleteUserById = createAsyncThunk<
   IUser,
   DeleteUserByIdRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('users/deleteById', async ({ id, token }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}users/${id}`, {
@@ -75,20 +76,20 @@ export const deleteUserById = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const user = (await (response as Response).json()) as IUser
+    const user = (await response.json()) as IUser
     return user
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching DELETE User By ID' })
+    return rejectWithValue({ message: 'Error delete User By ID' })
   }
 })
 
 export const updateUserById = createAsyncThunk<
   IUser,
   UpdateUserByIdRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('users/updateById', async ({ id, token, newBody }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}users/${id}`, {
@@ -100,13 +101,13 @@ export const updateUserById = createAsyncThunk<
       body: JSON.stringify(newBody),
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const user = (await (response as Response).json()) as IUser
+    const user = (await response.json()) as IUser
     return user
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching DELETE User By ID' })
+    return rejectWithValue({ message: 'Error update User By ID' })
   }
 })
 
@@ -157,12 +158,10 @@ const usersSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as { message: string }
+          state.error = action.payload as IRejectValue
         },
       )
   },
 })
-
-// export const { logOut } = usersSlice.actions
 
 export { usersSlice }

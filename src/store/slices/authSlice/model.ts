@@ -17,6 +17,10 @@ interface AuthState {
   error: { message: string } | null
 }
 
+interface IRejectValue {
+  message: string
+}
+
 type LoginRequest = {
   username: string
   password: string
@@ -29,4 +33,4 @@ type SignUpRequest = {
 }
 
 export { Role }
-export type { IAuthUser, AuthState, LoginRequest, SignUpRequest }
+export type { IAuthUser, AuthState, IRejectValue, LoginRequest, SignUpRequest }

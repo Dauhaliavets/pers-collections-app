@@ -3,6 +3,7 @@ import { API_URL } from '../../../constants/api'
 import {
   ICollection,
   CollectionsState,
+  IRejectValue,
   FetchCollectionsByIdRequest,
   CreateCollectionRequest,
   DeleteCollectionRequest,
@@ -18,7 +19,7 @@ const initialState: CollectionsState = {
 export const fetchCollections = createAsyncThunk<
   ICollection[],
   void,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('collections/fetchAll', async (_: void, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}collections`, {
@@ -27,10 +28,10 @@ export const fetchCollections = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const collections = (await (response as Response).json()) as ICollection[]
+    const collections = (await response.json()) as ICollection[]
     return collections
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching Collections' })
@@ -40,7 +41,7 @@ export const fetchCollections = createAsyncThunk<
 export const fetchCollectionsByOwnerId = createAsyncThunk<
   ICollection[],
   FetchCollectionsByIdRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('collections/fetchByOwnerId', async ({ id }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}collections/ownerId/${id}`, {
@@ -49,10 +50,10 @@ export const fetchCollectionsByOwnerId = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const collections = (await (response as Response).json()) as ICollection[]
+    const collections = (await response.json()) as ICollection[]
     return collections
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching Collections By Owner ID' })
@@ -62,7 +63,7 @@ export const fetchCollectionsByOwnerId = createAsyncThunk<
 export const createCollection = createAsyncThunk<
   ICollection,
   CreateCollectionRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('collections/create', async ({ token, body }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}collections`, {
@@ -74,20 +75,20 @@ export const createCollection = createAsyncThunk<
       body: JSON.stringify(body),
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const newCollection = (await (response as Response).json()) as ICollection
+    const newCollection = (await response.json()) as ICollection
     return newCollection
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching CREATE collection' })
+    return rejectWithValue({ message: 'Error create collection' })
   }
 })
 
 export const deleteCollectionById = createAsyncThunk<
   ICollection,
   DeleteCollectionRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('collections/delete', async ({ id, token }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}collections/${id}`, {
@@ -98,20 +99,20 @@ export const deleteCollectionById = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const deletedCollection = (await (response as Response).json()) as ICollection
+    const deletedCollection = (await response.json()) as ICollection
     return deletedCollection
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching DELETE Collection By ID' })
+    return rejectWithValue({ message: 'Error delete Collection By ID' })
   }
 })
 
 export const updateCollectionById = createAsyncThunk<
   ICollection,
   UpdateCollectionRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('collections/update', async ({ id, token, newBody }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}collections/${id}`, {
@@ -123,13 +124,13 @@ export const updateCollectionById = createAsyncThunk<
       body: JSON.stringify(newBody),
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const updatedCollection = (await (response as Response).json()) as ICollection
+    const updatedCollection = (await response.json()) as ICollection
     return updatedCollection
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching UPDATE Collection By ID' })
+    return rejectWithValue({ message: 'Error update Collection By ID' })
   }
 })
 
@@ -189,7 +190,7 @@ const collectionsSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as { message: string }
+          state.error = action.payload as IRejectValue
         },
       )
   },

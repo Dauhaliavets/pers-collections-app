@@ -23,13 +23,17 @@ interface ItemsState {
   error: { message: string } | null
 }
 
+interface IRejectValue {
+  message: string
+}
+
 interface FetchItemsByCollectionIdRequest {
   id: string
 }
 
 interface CreateItemRequest {
   token: string
-  body: IItem
+  body: Partial<IItem>
 }
 
 interface DeleteItemRequest {
@@ -46,6 +50,7 @@ interface UpdateItemRequest {
 export type {
   IItem,
   ItemsState,
+  IRejectValue,
   FetchItemsByCollectionIdRequest,
   CreateItemRequest,
   DeleteItemRequest,

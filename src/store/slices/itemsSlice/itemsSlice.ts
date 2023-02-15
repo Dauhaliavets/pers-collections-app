@@ -3,6 +3,7 @@ import { API_URL } from '../../../constants/api'
 import {
   IItem,
   ItemsState,
+  IRejectValue,
   FetchItemsByCollectionIdRequest,
   CreateItemRequest,
   DeleteItemRequest,
@@ -15,7 +16,7 @@ const initialState: ItemsState = {
   error: null,
 }
 
-export const fetchItems = createAsyncThunk<IItem[], void, { rejectValue: { message: string } }>(
+export const fetchItems = createAsyncThunk<IItem[], void, { rejectValue: IRejectValue }>(
   'items/fetchAll',
   async (_: void, { rejectWithValue }) => {
     try {
@@ -25,10 +26,10 @@ export const fetchItems = createAsyncThunk<IItem[], void, { rejectValue: { messa
         },
       })
       if (!response.ok) {
-        const data = await (response as Response).json()
+        const data = await response.json()
         return rejectWithValue(data)
       }
-      const items = (await (response as Response).json()) as IItem[]
+      const items = (await response.json()) as IItem[]
       return items
     } catch (error) {
       return rejectWithValue({ message: 'Error fetching ITEMS' })
@@ -39,7 +40,7 @@ export const fetchItems = createAsyncThunk<IItem[], void, { rejectValue: { messa
 export const fetchItemsByCollectionId = createAsyncThunk<
   IItem[],
   FetchItemsByCollectionIdRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('items/fetchItemsByCollectionId', async ({ id }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}items/collectionId/${id}`, {
@@ -48,45 +49,44 @@ export const fetchItemsByCollectionId = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const items = (await (response as Response).json()) as IItem[]
+    const items = (await response.json()) as IItem[]
     return items
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching Items By collection ID' })
   }
 })
 
-export const createItem = createAsyncThunk<
-  IItem,
-  CreateItemRequest,
-  { rejectValue: { message: string } }
->('items/create', async ({ token, body }, { rejectWithValue }) => {
-  try {
-    const response = await fetch(`${API_URL}items`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    })
-    if (!response.ok) {
-      const data = await (response as Response).json()
-      return rejectWithValue(data)
+export const createItem = createAsyncThunk<IItem, CreateItemRequest, { rejectValue: IRejectValue }>(
+  'items/create',
+  async ({ token, body }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_URL}items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      })
+      if (!response.ok) {
+        const data = await response.json()
+        return rejectWithValue(data)
+      }
+      const newItem = (await response.json()) as IItem
+      return newItem
+    } catch (error) {
+      return rejectWithValue({ message: 'Error Create item' })
     }
-    const newItem = (await (response as Response).json()) as IItem
-    return newItem
-  } catch (error) {
-    return rejectWithValue({ message: 'Error fetching Create item' })
-  }
-})
+  },
+)
 
 export const deleteItemById = createAsyncThunk<
   IItem,
   DeleteItemRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('items/delete', async ({ id, token }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}items/${id}`, {
@@ -97,20 +97,20 @@ export const deleteItemById = createAsyncThunk<
       },
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const deletedItem = (await (response as Response).json()) as IItem
+    const deletedItem = (await response.json()) as IItem
     return deletedItem
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching Delete Item By ID' })
+    return rejectWithValue({ message: 'Error delete Item By ID' })
   }
 })
 
 export const updateItemById = createAsyncThunk<
   IItem,
   UpdateItemRequest,
-  { rejectValue: { message: string } }
+  { rejectValue: IRejectValue }
 >('items/update', async ({ id, token, newBody }, { rejectWithValue }) => {
   try {
     const response = await fetch(`${API_URL}items/${id}`, {
@@ -122,13 +122,13 @@ export const updateItemById = createAsyncThunk<
       body: JSON.stringify(newBody),
     })
     if (!response.ok) {
-      const data = await (response as Response).json()
+      const data = await response.json()
       return rejectWithValue(data)
     }
-    const updatedItem = (await (response as Response).json()) as IItem
+    const updatedItem = (await response.json()) as IItem
     return updatedItem
   } catch (error) {
-    return rejectWithValue({ message: 'Error fetching Update Item By ID' })
+    return rejectWithValue({ message: 'Error update Item By ID' })
   }
 })
 
@@ -186,7 +186,7 @@ const itemsSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload as { message: string }
+          state.error = action.payload as IRejectValue
         },
       )
   },

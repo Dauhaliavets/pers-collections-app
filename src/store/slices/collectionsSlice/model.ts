@@ -15,6 +15,10 @@ interface CollectionsState {
   error: { message: string } | null
 }
 
+interface IRejectValue {
+  message: string
+}
+
 interface FetchCollectionsByIdRequest {
   id: string
 }
@@ -38,6 +42,7 @@ interface UpdateCollectionRequest {
 export type {
   ICollection,
   CollectionsState,
+  IRejectValue,
   FetchCollectionsByIdRequest,
   CreateCollectionRequest,
   DeleteCollectionRequest,

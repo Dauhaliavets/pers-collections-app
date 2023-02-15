@@ -12,6 +12,10 @@ interface UsersState {
   error: { message: string } | null
 }
 
+interface IRejectValue {
+  message: string
+}
+
 interface FetchUsersRequest {
   token: string
 }
@@ -35,6 +39,7 @@ interface UpdateUserByIdRequest {
 export type {
   IUser,
   UsersState,
+  IRejectValue,
   FetchUsersRequest,
   FetchUserByIdRequest,
   DeleteUserByIdRequest,
