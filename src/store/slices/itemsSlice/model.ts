@@ -4,15 +4,15 @@ interface IComment {
   itemId: string
   sender: string
   text: string
-  timestamps: { createdAt: string }
+  timestamps?: { createdAt: string }
 }
 interface IItem {
   _id?: string
   collectionId: string
   title: string
   tags: string[]
-  comments?: IComment[]
-  likes?: string[]
+  comments: IComment[]
+  likes: string[]
   extraFields?: IAdditionalField[]
   timestamps?: { createdAt: string }
 }
