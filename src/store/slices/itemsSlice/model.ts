@@ -1,10 +1,9 @@
 import { IAdditionalField } from '../../../models/additionalField.model'
 
 interface IComment {
-  itemId: string
   sender: string
   text: string
-  timestamps?: { createdAt: string }
+  createdAt?: string
 }
 interface IItem {
   _id?: string
@@ -47,6 +46,12 @@ interface UpdateItemRequest {
   newBody: Partial<IItem>
 }
 
+interface CreateItemCommentRequest {
+  id: string
+  token: string
+  commentBody: IComment
+}
+
 export type {
   IItem,
   ItemsState,
@@ -55,4 +60,5 @@ export type {
   CreateItemRequest,
   DeleteItemRequest,
   UpdateItemRequest,
+  CreateItemCommentRequest,
 }

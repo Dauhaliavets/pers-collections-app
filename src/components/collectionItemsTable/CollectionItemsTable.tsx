@@ -150,7 +150,11 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
             <TableRow key={ind}>
               <TableCell align='right'>{ind + 1}</TableCell>
               <TableCell align='right'>{row.title}</TableCell>
-              <TableCell align='right'>{row.tags}</TableCell>
+              <TableCell align='right'>
+                {row.tags.map((tag, i) => (
+                  <span key={i}>{tag}</span>
+                ))}
+              </TableCell>
               <TableCell align='right'>{row.likes?.length}</TableCell>
               <TableCell align='right'>{row.comments?.length}</TableCell>
               {row.extraFields?.map((field) => (
