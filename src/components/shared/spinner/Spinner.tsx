@@ -1,7 +1,10 @@
 import React from 'react'
 import { Box, CircularProgress } from '@mui/material'
 
-export const Spinner = () => {
+interface ISpinnerProps {
+  size?: number
+}
+export const Spinner: React.FC<ISpinnerProps> = ({ size = 50 }) => {
   return (
     <Box
       sx={{
@@ -16,7 +19,7 @@ export const Spinner = () => {
         alignItems: 'center',
       }}
     >
-      <CircularProgress size={50} />
+      <CircularProgress size={size} />
     </Box>
   )
 }

@@ -3,8 +3,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchCollections } from '../store/slices/collectionsSlice/collectionsSlice'
-import { Alert, Box, Button, CircularProgress } from '@mui/material'
+import { Alert, Box, Button } from '@mui/material'
 import { CollectionsWrapper } from '../components/collectionsWrapper/CollectionsWrapper'
+import { Spinner } from '../components/shared/spinner/Spinner'
 
 export const Collections: React.FC = () => {
   const { isAuth, user } = useAppSelector((state) => state.auth)
@@ -30,7 +31,7 @@ export const Collections: React.FC = () => {
         </CollectionsWrapper>
       )}
 
-      {isLoading && <CircularProgress />}
+      {isLoading && <Spinner size={100} />}
       {error && <Alert severity='error'>{error.message}</Alert>}
     </Box>
   )

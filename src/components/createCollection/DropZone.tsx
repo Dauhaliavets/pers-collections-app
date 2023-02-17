@@ -1,8 +1,11 @@
 import React from 'react'
 import { storage } from '../../firebase/firebase'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { Box, Typography, Alert, CircularProgress } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert'
+import { Spinner } from '../shared/spinner/Spinner'
 
 interface IDropZoneProps {
   imgUrl: string
@@ -60,8 +63,8 @@ export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
         </Typography>
       )}
       {isLoadingImg && (
-        <Box sx={{ display: 'flex' }}>
-          <CircularProgress />
+        <Box sx={{ position: 'relative' }}>
+          <Spinner />
         </Box>
       )}
       {imgUrl && (
