@@ -19,6 +19,7 @@ import { EditCollectionItem } from './pages/EditCollectionItem'
 
 import Container from '@mui/material/Container'
 import { CollectionItemDetails } from './pages/CollectionItemDetails'
+import { EditCollection } from './pages/EditCollection'
 
 function App() {
   const [theme, setTheme] = useState<Themes>(
@@ -45,6 +46,7 @@ function App() {
               <Route path='collections' element={<Collections />} />
               <Route path='collections/create' element={<CreateCollection />} />
               <Route path='collections/:collectionId' element={<CollectionDetails />} />
+              <Route path='collections/:collectionId/edit' element={<EditCollection />} />
               <Route
                 path='collections/:collectionId/createItem'
                 element={<CreateCollectionItem />}

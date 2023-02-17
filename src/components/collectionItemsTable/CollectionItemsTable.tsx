@@ -1,9 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../store'
 import { IItem } from '../../store/slices/itemsSlice/model'
 import { ICollection } from '../../store/slices/collectionsSlice/model'
+import { getVisibleExtraFieldIds } from '../../utils/getVisibleExtraFieldIds'
+import { deleteItemById } from '../../store/slices/itemsSlice/itemsSlice'
 
-import { useTheme } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -13,76 +15,13 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import IconButton from '@mui/material/IconButton'
-import FirstPageIcon from '@mui/icons-material/FirstPage'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import LastPageIcon from '@mui/icons-material/LastPage'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import PreviewIcon from '@mui/icons-material/Preview'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import TableHead from '@mui/material/TableHead'
-import Box from '@mui/material/Box'
-import { useAppDispatch, useAppSelector } from '../../store'
-import { deleteItemById } from '../../store/slices/itemsSlice/itemsSlice'
-
-interface TablePaginationActionsProps {
-  count: number
-  page: number
-  rowsPerPage: number
-  onPageChange: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void
-}
-
-function TablePaginationActions(props: TablePaginationActionsProps) {
-  const theme = useTheme()
-  const { count, page, rowsPerPage, onPageChange } = props
-
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, 0)
-  }
-
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page - 1)
-  }
-
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page + 1)
-  }
-
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
-  }
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label='first page'
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label='previous page'>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='next page'
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='last page'
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  )
-}
+import { TablePaginationActions } from './TablePaginationActions'
 
 interface ICollectionItemsProps {
   items: IItem[]
@@ -121,8 +60,12 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
   }
 
   const handleClickDeleteItem = (id: string) => {
-    dispatch(deleteItemById({ id, token: user?.token as string }))
+    if (user) {
+      dispatch(deleteItemById({ id, token: user.token }))
+    }
   }
+
+  const visibleExtraFieldIds = getVisibleExtraFieldIds(currentCollection)
 
   return (
     <TableContainer component={Paper}>
@@ -134,11 +77,15 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
             <TableCell align='right'>Tags</TableCell>
             <TableCell align='right'>Likes</TableCell>
             <TableCell align='right'>Comments</TableCell>
-            {currentCollection.extraFields?.map((field) => (
-              <TableCell key={field.id} align='right'>
-                {field.label}
-              </TableCell>
-            ))}
+            {currentCollection.extraFields?.map((field) => {
+              if (field.visible) {
+                return (
+                  <TableCell key={field.id} align='right'>
+                    {field.label}
+                  </TableCell>
+                )
+              }
+            })}
             <TableCell align='right'>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -157,17 +104,21 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
               </TableCell>
               <TableCell align='right'>{row.likes?.length}</TableCell>
               <TableCell align='right'>{row.comments?.length}</TableCell>
-              {row.extraFields?.map((field) => (
-                <TableCell key={field.id} style={{ width: 160 }} align='right'>
-                  {field.value === true ? (
-                    <TaskAltIcon />
-                  ) : field.value === false ? (
-                    <RadioButtonUncheckedIcon />
-                  ) : (
-                    field.value
-                  )}
-                </TableCell>
-              ))}
+              {row.extraFields?.map((field) => {
+                if (visibleExtraFieldIds.includes(field.id)) {
+                  return (
+                    <TableCell key={field.id} style={{ width: 160 }} align='right'>
+                      {field.value === true ? (
+                        <TaskAltIcon />
+                      ) : field.value === false ? (
+                        <RadioButtonUncheckedIcon />
+                      ) : (
+                        field.value
+                      )}
+                    </TableCell>
+                  )
+                }
+              })}
               <TableCell style={{ width: 160 }} align='right'>
                 <IconButton
                   aria-label='show'

@@ -44,8 +44,7 @@ const useAdditionalFields = (defaultFields: IAdditionalField[]) => {
     const updatedFields = additionalFields.map((field) => {
       const { id } = field
       if (fieldId === id) {
-        field.visible = event.target.checked
-        return field
+        return { ...field, visible: event.target.checked }
       } else {
         return field
       }

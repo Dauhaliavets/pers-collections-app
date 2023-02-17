@@ -91,7 +91,7 @@ export const deleteCollectionById = createAsyncThunk<
   { rejectValue: IRejectValue }
 >('collections/delete', async ({ id, token }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_URL}collections/${id}`, {
+    const response: Response = await fetch(`${API_URL}collections/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
