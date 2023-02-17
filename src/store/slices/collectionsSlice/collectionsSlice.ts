@@ -162,7 +162,7 @@ const collectionsSlice = createSlice({
       })
       .addCase(updateCollectionById.fulfilled, (state, { payload }) => {
         state.collections = state.collections.map((collection) =>
-          collection._id === collection._id ? payload : collection,
+          collection._id === payload._id ? payload : collection,
         )
         state.isLoading = false
         state.error = null

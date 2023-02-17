@@ -168,12 +168,13 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
                   )}
                 </TableCell>
               ))}
-              <TableCell
-                style={{ width: 160 }}
-                align='right'
-                onClick={() => handleClickShowItemDetails(row?._id as string)}
-              >
-                <IconButton aria-label='show' size='small' color='primary'>
+              <TableCell style={{ width: 160 }} align='right'>
+                <IconButton
+                  aria-label='show'
+                  size='small'
+                  color='primary'
+                  onClick={() => handleClickShowItemDetails(row?._id as string)}
+                >
                   <PreviewIcon fontSize='small' />
                 </IconButton>
                 <IconButton

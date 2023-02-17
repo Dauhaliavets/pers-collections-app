@@ -5,6 +5,7 @@ interface ICollection {
   ownerId: string
   title: string
   description: string
+  topic: string
   imageUrl?: string
   extraFields?: IAdditionalField[]
 }

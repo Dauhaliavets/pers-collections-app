@@ -19,7 +19,6 @@ export const Collections: React.FC = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '20px' }}>
-      <CollectionsWrapper title='All Collections' collections={collections} />
       {isAuth && (
         <CollectionsWrapper
           title='My Collections'
@@ -30,6 +29,8 @@ export const Collections: React.FC = () => {
           </Button>
         </CollectionsWrapper>
       )}
+
+      <CollectionsWrapper title='All Collections' collections={collections} />
 
       {isLoading && <Spinner size={100} />}
       {error && <Alert severity='error'>{error.message}</Alert>}

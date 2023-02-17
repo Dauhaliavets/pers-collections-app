@@ -30,8 +30,8 @@ export function CollectionDetails() {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flexGrow: 1 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <PrevPageButton />
-        <Button variant='contained' onClick={() => navigate('createItem')}>
-          Add new item
+        <Button variant='contained' onClick={() => navigate('edit')}>
+          Edit collection
         </Button>
       </Box>
       <Box
@@ -47,6 +47,9 @@ export function CollectionDetails() {
       </Box>
       {isLoading && <Spinner />}
       {error && <Alert severity='error'>{error.message}</Alert>}
+      <Button variant='contained' onClick={() => navigate('createItem')}>
+        Add new item
+      </Button>
       {items && <CollectionItemsTable items={items} currentCollection={currentCollection} />}
     </Box>
   )
