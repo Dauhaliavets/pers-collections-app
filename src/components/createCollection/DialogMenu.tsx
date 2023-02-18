@@ -29,10 +29,17 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
     handleCloseDialogMenu,
   } = useDialogMenu()
 
+  const onSubmit = () => {
+    if (fieldType && fieldLabel) {
+      createAdditionalField(fieldType, fieldLabel)
+      handleCloseDialogMenu()
+    }
+  }
+
   return (
     <>
       <Button variant='outlined' onClick={handleOpenDialogMenu}>
-        Add New Field
+        New Field
       </Button>
       <Dialog
         open={open}
@@ -77,13 +84,7 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialogMenu}>Cancel</Button>
-          <Button
-            onClick={() => {
-              createAdditionalField(fieldType, fieldLabel)
-              handleCloseDialogMenu()
-            }}
-            variant='contained'
-          >
+          <Button onClick={onSubmit} variant='contained' disabled={!fieldType || !fieldLabel}>
             Add
           </Button>
         </DialogActions>

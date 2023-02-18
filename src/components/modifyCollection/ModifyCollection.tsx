@@ -9,7 +9,6 @@ import {
 } from '../../store/slices/collectionsSlice/collectionsSlice'
 import { topics } from '../../constants/topics'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
-import { TabPanel } from '../../components/material/tabPanel/tabPanel'
 import { ElementSwitcher } from '../../components/shared/elementSwitcher/ElementSwitcher'
 import { DialogMenu } from '../../components/createCollection/DialogMenu'
 import { DropZone } from '../../components/createCollection/DropZone'
@@ -29,6 +28,7 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { IAdditionalField } from '../../models/additionalField.model'
+import { TabPanel } from './tabPanel/TabPanel'
 
 type CollectionForm = {
   title: string
@@ -85,37 +85,31 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
   })
 
   const onSubmit: SubmitHandler<CollectionForm> = (formData) => {
-    switch (action) {
-      case 'create':
-        if (user) {
-          const newCollection = {
-            ...formData,
-            ownerId: user.id,
-            imageUrl: imgUrl,
-            extraFields: additionalFields,
-          }
-
-          dispatch(createCollection({ token: user.token, body: newCollection })).then(() =>
-            navigate(-1),
-          )
+    if (action === 'create') {
+      if (user) {
+        const { id, token } = user
+        const body = {
+          ...formData,
+          ownerId: id,
+          imageUrl: imgUrl,
+          extraFields: additionalFields,
         }
-        break
-      case 'edit':
-        if (user && collectionId) {
-          const newCollection = {
-            ...formData,
-            imageUrl: imgUrl,
-            extraFields: additionalFields,
-          }
 
-          dispatch(
-            updateCollectionById({ id: collectionId, token: user.token, newBody: newCollection }),
-          ).then(() => navigate(-1))
+        dispatch(createCollection({ token, body })).then(() => navigate(-1))
+      }
+    } else if (action === 'edit') {
+      if (user && collectionId) {
+        const { token } = user
+        const newBody = {
+          ...formData,
+          imageUrl: imgUrl,
+          extraFields: additionalFields,
         }
-        break
 
-      default:
-        break
+        dispatch(updateCollectionById({ id: collectionId, token, newBody })).then(() =>
+          navigate(-1),
+        )
+      }
     }
   }
 
