@@ -9,7 +9,7 @@ import {
 } from '../../store/slices/collectionsSlice/collectionsSlice'
 import { topics } from '../../constants/topics'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
-import { ElementSwitcher } from '../../components/shared/elementSwitcher/ElementSwitcher'
+import { FormElementSwitch } from '../shared/formElementSwitch/FormElementSwitch'
 import { DialogMenu } from '../../components/createCollection/DialogMenu'
 import { DropZone } from '../../components/createCollection/DropZone'
 
@@ -18,17 +18,17 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
-import Select from '@mui/material/Select'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { IAdditionalField } from '../../models/additionalField.model'
 import { TabPanel } from './tabPanel/TabPanel'
+import { FormInputText } from '../shared/formComponents/FormInputText'
+import { FormInputTextarea } from '../shared/formComponents/FormInputTextarea'
+import { PrevPageButton } from '../shared/buttons/PrevPageButton'
+import { FormInputDropdown } from '../shared/formComponents/FormInputDropdown'
 
 type CollectionForm = {
   title: string
@@ -119,6 +119,9 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <PrevPageButton />
+      </Box>
       <Typography variant='h5' component='h5' align='center'>
         {header}
       </Typography>
@@ -126,28 +129,15 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
         <Grid container item spacing={2} component={'form'} onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={2}>
             <Typography variant='h6' component='h6'>
-              Title:
+              Title*:
             </Typography>
           </Grid>
           <Grid item xs={10}>
-            <Controller
-              name='title'
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  placeholder='Enter title'
-                  variant='outlined'
-                  autoComplete='off'
-                  size='small'
-                />
-              )}
-            />
+            <FormInputText name={'title'} control={control} label={'Title'} />
           </Grid>
           <Grid item xs={2}>
             <Typography variant='h6' component='h6'>
-              Description:
+              Description*:
             </Typography>
           </Grid>
           <Grid item xs={10}>
@@ -159,18 +149,10 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
                 </Tabs>
               </Box>
               <TabPanel value={tabValue} index={0}>
-                <Controller
-                  name='description'
+                <FormInputTextarea
+                  name={'description'}
                   control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <TextareaAutosize
-                      {...field}
-                      minRows={3}
-                      placeholder='Here you can write Markdown'
-                      style={{ width: 700 }}
-                    />
-                  )}
+                  label={'Here you can write Markdown'}
                 />
               </TabPanel>
               <TabPanel value={tabValue} index={1}>
@@ -185,26 +167,15 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
           </Grid>
           <Grid item xs={2}>
             <Typography variant='h6' component='h6'>
-              Topic:
+              Topic*:
             </Typography>
           </Grid>
           <Grid item xs={10}>
-            <Controller
-              name='topic'
+            <FormInputDropdown
+              name={'topic'}
               control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select {...field} size='small' sx={{ width: '200px' }} displayEmpty>
-                  <MenuItem value=''>
-                    <em>None</em>
-                  </MenuItem>
-                  {topics.map((topic, ind) => (
-                    <MenuItem key={ind} value={topic.value}>
-                      {topic.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
+              label={'Topic'}
+              selectOptions={topics}
             />
           </Grid>
           <Grid item xs={2}>
@@ -246,16 +217,11 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
                   justifyContent: 'space-between',
                 }}
               >
-                <Box
-                  sx={{
-                    width: '100%',
-                    backgroundColor: '#cccccc33',
-                    position: 'relative',
-                    zIndex: -1,
-                  }}
-                >
-                  <ElementSwitcher field={field} handleChange={handleChangeAdditionalField} />
-                </Box>
+                <FormElementSwitch
+                  field={field}
+                  handleChange={handleChangeAdditionalField}
+                  options={{ disabled: true }}
+                />
                 <Box
                   sx={{
                     display: 'flex',
