@@ -1,4 +1,4 @@
-const transformDate = (dateStr: string | undefined): string => {
+export const transformDate = (dateStr: string | undefined): string => {
   if (dateStr) {
     const date = new Date(dateStr)
     const timeFormat: Intl.DateTimeFormatOptions = {
@@ -14,5 +14,3 @@ const transformDate = (dateStr: string | undefined): string => {
   }
   return 'Invalid Date'
 }
-
-export { transformDate }

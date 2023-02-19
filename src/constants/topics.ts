@@ -1,5 +1,9 @@
 export const topics = [
   {
+    value: '',
+    label: 'None',
+  },
+  {
     value: 'alcohol',
     label: 'Alcohol',
   },
