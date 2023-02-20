@@ -1,27 +1,23 @@
 import React from 'react'
-import { Alert, Button, Stack, TextField, Typography } from '@mui/material'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice/authSlice'
+import { authFormValidationRules } from '../../constants/authFormValidationRules'
+import { SignUpInputs } from './authForm.types'
 import { Spinner } from '../shared/spinner/Spinner'
-import { useNavigate } from 'react-router-dom'
-
-type SignUpInputs = {
-  username: string
-  email: string
-  password: string
-}
+import { FormInputText } from '../shared/formComponents/FormInputText'
+import Alert from '@mui/material/Alert'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
 export const SignUpForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm<SignUpInputs>({
+  const methods = useForm<SignUpInputs>({
     defaultValues: {
       username: '',
       email: '',
@@ -29,7 +25,16 @@ export const SignUpForm: React.FC = () => {
     },
   })
 
-  const onSubmit: SubmitHandler<SignUpInputs> = (fields) => dispatch(signUp(fields))
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods
+
+  const onSubmit: SubmitHandler<SignUpInputs> = (fields) => {
+    if (isValid) {
+      dispatch(signUp(fields))
+    }
+  }
 
   React.useEffect(() => {
     if (isAuth) navigate('/collections')
@@ -38,7 +43,7 @@ export const SignUpForm: React.FC = () => {
   return (
     <Stack
       py={4}
-      spacing={2}
+      spacing={3}
       component={'form'}
       onSubmit={handleSubmit(onSubmit)}
       sx={{ position: 'relative' }}
@@ -46,47 +51,26 @@ export const SignUpForm: React.FC = () => {
       <Typography variant='h4' component='h4' textAlign={'center'}>
         Registration
       </Typography>
-      <Controller
-        name='username'
-        control={control}
-        rules={{
-          required: true,
-          minLength: { value: 3, message: 'Username min Length 3' },
-          maxLength: { value: 15, message: 'Username max Length 15' },
-        }}
-        render={({ field }) => (
-          <TextField {...field} label='Username' variant='outlined' autoComplete='off' />
-        )}
-      />
-      <Controller
-        name='email'
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label='Email'
-            variant='outlined'
-            type={'email'}
-            autoComplete='off'
-          />
-        )}
-      />
-      <Controller
-        name='password'
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label='Password'
-            variant='outlined'
-            type='password'
-            autoComplete='off'
-          />
-        )}
-      />
-      <Button variant='contained' type='submit' disabled={!isValid}>
+      <FormProvider {...methods}>
+        <FormInputText
+          name={'username'}
+          label={'Username'}
+          rules={authFormValidationRules.username}
+        />
+        <FormInputText
+          name={'email'}
+          label={'Email'}
+          type={'email'}
+          rules={authFormValidationRules.email}
+        />
+        <FormInputText
+          name={'password'}
+          label={'Password'}
+          type={'password'}
+          rules={authFormValidationRules.password}
+        />
+      </FormProvider>
+      <Button variant='contained' type='submit'>
         Login
       </Button>
       {isLoading && <Spinner />}

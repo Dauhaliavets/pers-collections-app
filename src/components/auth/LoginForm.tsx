@@ -1,33 +1,39 @@
 import React from 'react'
-import { Alert, Button, Stack, TextField, Typography } from '@mui/material'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { logIn } from '../../store/slices/authSlice/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { authFormValidationRules } from '../../constants/authFormValidationRules'
+import { LoginInputs } from './authForm.types'
 import { Spinner } from '../shared/spinner/Spinner'
-
-type LoginInputs = {
-  username: string
-  password: string
-}
+import { FormInputText } from '../shared/formComponents/FormInputText'
+import Alert from '@mui/material/Alert'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
 export const LoginForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm<LoginInputs>({
+  const methods = useForm<LoginInputs>({
     defaultValues: {
       username: '',
       password: '',
     },
   })
 
-  const onSubmit: SubmitHandler<LoginInputs> = (fields) => dispatch(logIn(fields))
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods
+
+  const onSubmit: SubmitHandler<LoginInputs> = (fields) => {
+    if (isValid) {
+      dispatch(logIn(fields))
+    }
+  }
 
   React.useEffect(() => {
     if (isAuth) navigate('/collections')
@@ -44,29 +50,20 @@ export const LoginForm: React.FC = () => {
       <Typography variant='h4' component='h4' textAlign={'center'}>
         Authorization
       </Typography>
-      <Controller
-        name='username'
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField {...field} label='Username' variant='outlined' autoComplete='off' />
-        )}
-      />
-      <Controller
-        name='password'
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label='Password'
-            variant='outlined'
-            type='password'
-            autoComplete='off'
-          />
-        )}
-      />
-      <Button variant='contained' type='submit' disabled={!isValid}>
+      <FormProvider {...methods}>
+        <FormInputText
+          name={'username'}
+          label={'Username'}
+          rules={authFormValidationRules.username}
+        />
+        <FormInputText
+          name={'password'}
+          label={'Password'}
+          type={'password'}
+          rules={authFormValidationRules.password}
+        />
+      </FormProvider>
+      <Button variant='contained' type='submit'>
         Login
       </Button>
       {isLoading && <Spinner />}

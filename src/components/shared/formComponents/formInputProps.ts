@@ -5,8 +5,10 @@ interface ISelectOption {
 
 interface IFormInputTextProps {
   name: string
-  control: any
   label: string
+  control?: any
+  rules?: any
+  type?: string
   selectOptions?: ISelectOption[]
 }
 
