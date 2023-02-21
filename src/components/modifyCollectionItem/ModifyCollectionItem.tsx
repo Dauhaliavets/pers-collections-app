@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { createItem, updateItemById } from '../../store/slices/itemsSlice/itemsSlice'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
@@ -33,16 +33,17 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
 
   const isFilledAdditionalFields = CheckFilledAdditionalFields(additionalFields)
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       title: title,
       tags: tags.join(' '),
     },
   })
+
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods
 
   const onSubmit: SubmitHandler<MainFields> = (mainFields) => {
     if (action === 'create') {
@@ -89,8 +90,10 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
         spacing={1}
         sx={{ position: 'relative' }}
       >
-        <FormInputText name={'title'} control={control} label={'Title'} />
-        <FormInputText name={'tags'} control={control} label={'Tags'} />
+        <FormProvider {...methods}>
+          <FormInputText name={'title'} label={'Title'} />
+          <FormInputText name={'tags'} label={'Tags'} />
+        </FormProvider>
         {additionalFields.map((field, i) => (
           <Box
             key={i}

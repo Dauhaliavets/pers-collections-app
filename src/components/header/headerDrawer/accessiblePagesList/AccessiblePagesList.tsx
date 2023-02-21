@@ -15,10 +15,17 @@ export const AccessiblePagesList: React.FC<IAccessiblePagesListProps> = ({ toggl
   return (
     <List>
       <ListItem disablePadding onClick={toggleDrawer(false)}>
-        <ListItemButton onClick={() => navigate('/collections')}>
+        <ListItemButton onClick={() => navigate('/home')}>
           <ListItemText primary={'Collections'} />
         </ListItemButton>
       </ListItem>
+      {user && (
+        <ListItem disablePadding onClick={toggleDrawer(false)}>
+          <ListItemButton onClick={() => navigate('/collections')}>
+            <ListItemText primary={'My Collections'} />
+          </ListItemButton>
+        </ListItem>
+      )}
       {user && user.role === 'ADMIN' && (
         <ListItem disablePadding onClick={toggleDrawer(false)}>
           <ListItemButton onClick={() => navigate('/users')}>

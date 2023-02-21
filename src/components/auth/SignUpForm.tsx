@@ -37,7 +37,7 @@ export const SignUpForm: React.FC = () => {
   }
 
   React.useEffect(() => {
-    if (isAuth) navigate('/collections')
+    if (isAuth) navigate('/home')
   }, [isAuth])
 
   return (

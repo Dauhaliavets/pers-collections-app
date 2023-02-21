@@ -1,27 +1,21 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ICollection } from '../../store/slices/collectionsSlice/model'
+import { useAppSelector } from '../../store'
+import { ICollectionsWrapperProps } from './collectionWrapperProps'
+
+import { Spinner } from '../shared/spinner/Spinner'
+import { CollectionCard } from './collectionCard/CollectionCard'
 
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardActionArea from '@mui/material/CardActionArea'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Grid'
+import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
-
-interface ICollectionsWrapperProps {
-  title: string
-  collections: ICollection[]
-  children?: React.ReactNode
-}
 
 export const CollectionsWrapper: React.FC<ICollectionsWrapperProps> = ({
   title,
   collections,
   children,
 }) => {
-  const navigate = useNavigate()
+  const { isLoading, error } = useAppSelector((state) => state.collections)
 
   return (
     <>
@@ -34,27 +28,12 @@ export const CollectionsWrapper: React.FC<ICollectionsWrapperProps> = ({
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {collections.map((collection) => (
           <Grid item xs={6} sm={4} md={4} key={collection._id}>
-            <Card sx={{ maxWidth: '100%' }} onClick={() => navigate(`${collection._id}`)}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  height='200'
-                  image={collection.imageUrl}
-                  alt='collection image'
-                />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='div'>
-                    {collection.title}
-                  </Typography>
-                  <Typography variant='body2' color='text.secondary'>
-                    {collection.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <CollectionCard collection={collection} />
           </Grid>
         ))}
       </Grid>
+      {isLoading && <Spinner size={100} />}
+      {error && <Alert severity='error'>{error.message}</Alert>}
     </>
   )
 }

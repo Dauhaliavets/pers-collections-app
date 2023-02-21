@@ -120,15 +120,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
             <FormInputText name={'title'} label={'Title'} rules={validationRules.title} />
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
-                <Tabs
-                  value={tabValue}
-                  onChange={handleChangeTabValue}
-                  // style={{
-                  //   '&.MuiButtonBase-root .MuiTab-root': {
-                  //     padding: '5px 10px',
-                  //   },
-                  // }}
-                >
+                <Tabs value={tabValue} onChange={handleChangeTabValue}>
                   <Tab label='Edit' />
                   <Tab label='Preview' />
                 </Tabs>

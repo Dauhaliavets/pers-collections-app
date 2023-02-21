@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Locales, Themes } from './models/GlobalContextModel'
@@ -11,21 +11,22 @@ import { LoginForm } from './components/auth/LoginForm'
 import { SignUpForm } from './components/auth/SignUpForm'
 import { AdminPage } from './pages/AdminPage'
 import { Welcome } from './pages/Welcome'
-import { Collections } from './pages/Collections'
+import { HomePage } from './pages/HomePage'
+import { UserCollections } from './pages/UserCollections'
 import { CreateCollection } from './pages/CreateCollection'
+import { EditCollection } from './pages/EditCollection'
 import { CollectionDetails } from './pages/CollectionDetails'
+import { CollectionItemDetails } from './pages/CollectionItemDetails'
 import { CreateCollectionItem } from './pages/CreateCollectionItem'
 import { EditCollectionItem } from './pages/EditCollectionItem'
 
 import Container from '@mui/material/Container'
-import { CollectionItemDetails } from './pages/CollectionItemDetails'
-import { EditCollection } from './pages/EditCollection'
 
 function App() {
-  const [theme, setTheme] = useState<Themes>(
+  const [theme, setTheme] = React.useState<Themes>(
     (localStorage.getItem('theme') as Themes) || Themes.Light,
   )
-  const [locale, setLocale] = useState<Locales>(
+  const [locale, setLocale] = React.useState<Locales>(
     (localStorage.getItem('locale') as Locales) || Locales.EN,
   )
   return (
@@ -43,7 +44,8 @@ function App() {
                 <Route path='login' element={<LoginForm />} />
                 <Route path='signup' element={<SignUpForm />} />
               </Route>
-              <Route path='collections' element={<Collections />} />
+              <Route path='home' element={<HomePage />} />
+              <Route path='collections' element={<UserCollections />} />
               <Route path='collections/create' element={<CreateCollection />} />
               <Route path='collections/:collectionId' element={<CollectionDetails />} />
               <Route path='collections/:collectionId/edit' element={<EditCollection />} />
