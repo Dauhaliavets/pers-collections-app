@@ -12,4 +12,8 @@ interface IFormInputTextProps {
   selectOptions?: ISelectOption[]
 }
 
-export type { IFormInputTextProps }
+interface IFormOutputProps {
+  name: string
+}
+
+export type { IFormInputTextProps, IFormOutputProps }

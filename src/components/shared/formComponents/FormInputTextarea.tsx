@@ -1,16 +1,29 @@
 import React from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { IFormInputTextProps } from './formInputProps'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+import TextField from '@mui/material/TextField'
 
-export const FormInputTextarea: React.FC<IFormInputTextProps> = ({ name, control, label }) => {
+export const FormInputTextarea: React.FC<IFormInputTextProps> = ({ name, label, rules }) => {
+  const { control } = useFormContext()
+
   return (
     <Controller
       name={name}
       control={control}
-      rules={{ required: true }}
-      render={({ field }) => (
-        <TextareaAutosize {...field} minRows={3} placeholder={label} style={{ width: 700 }} />
+      rules={rules}
+      render={({ field, fieldState: { error } }) => (
+        <TextField
+          {...field}
+          error={!!error}
+          helperText={error ? error.message : ''}
+          label={label}
+          multiline
+          minRows={3}
+          maxRows={6}
+          variant='outlined'
+          autoComplete='off'
+          fullWidth
+        />
       )}
     />
   )
