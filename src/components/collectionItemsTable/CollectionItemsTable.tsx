@@ -26,11 +26,13 @@ import { TablePaginationActions } from './TablePaginationActions'
 interface ICollectionItemsProps {
   items: IItem[]
   currentCollection: ICollection
+  isOwnerOrAdmin: boolean
 }
 
 export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
   items,
   currentCollection,
+  isOwnerOrAdmin,
 }) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
@@ -72,7 +74,9 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
       <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
         <TableHead>
           <TableRow>
-            <TableCell>№</TableCell>
+            <TableCell align='center' style={{ width: 40 }}>
+              №
+            </TableCell>
             <TableCell align='right'>Title</TableCell>
             <TableCell align='right'>Tags</TableCell>
             <TableCell align='right'>Likes</TableCell>
@@ -86,7 +90,9 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
                 )
               }
             })}
-            <TableCell align='right'>Actions</TableCell>
+            <TableCell align='center' style={{ width: 100 }}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -119,7 +125,7 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
                   )
                 }
               })}
-              <TableCell style={{ width: 160 }} align='right'>
+              <TableCell align='center'>
                 <IconButton
                   aria-label='show'
                   size='small'
@@ -128,21 +134,25 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
                 >
                   <PreviewIcon fontSize='small' />
                 </IconButton>
-                <IconButton
-                  aria-label='edit'
-                  size='small'
-                  onClick={() => handleClickEditItem(row?._id as string)}
-                >
-                  <EditIcon fontSize='small' />
-                </IconButton>
-                <IconButton
-                  aria-label='delete'
-                  size='small'
-                  color='error'
-                  onClick={() => handleClickDeleteItem(row?._id as string)}
-                >
-                  <DeleteIcon fontSize='small' />
-                </IconButton>
+                {isOwnerOrAdmin && (
+                  <IconButton
+                    aria-label='edit'
+                    size='small'
+                    onClick={() => handleClickEditItem(row?._id as string)}
+                  >
+                    <EditIcon fontSize='small' />
+                  </IconButton>
+                )}
+                {isOwnerOrAdmin && (
+                  <IconButton
+                    aria-label='delete'
+                    size='small'
+                    color='error'
+                    onClick={() => handleClickDeleteItem(row?._id as string)}
+                  >
+                    <DeleteIcon fontSize='small' />
+                  </IconButton>
+                )}
               </TableCell>
             </TableRow>
           ))}
