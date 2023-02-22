@@ -8,11 +8,12 @@ type TCommentForm = {
   commentBody: string
 }
 
-interface ICommentFormProps {
-  itemId: string | undefined
+interface IItemDetailsHeaderProps {
+  currentItem: IItem
 }
 
 interface IItemDetailsTableProps {
   currentItem: IItem
 }
-export type { ICommentListProps, TCommentForm, ICommentFormProps, IItemDetailsTableProps }
+
+export type { ICommentListProps, TCommentForm, IItemDetailsHeaderProps, IItemDetailsTableProps }

@@ -105,7 +105,7 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
               <TableCell align='right'>{row.title}</TableCell>
               <TableCell align='right'>
                 {row.tags.map((tag, i) => (
-                  <span key={i}>{tag}</span>
+                  <div key={i}>{tag}</div>
                 ))}
               </TableCell>
               <TableCell align='right'>{row.likes?.length}</TableCell>
@@ -113,7 +113,7 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
               {row.extraFields?.map((field) => {
                 if (visibleExtraFieldIds.includes(field.id)) {
                   return (
-                    <TableCell key={field.id} style={{ width: 160 }} align='right'>
+                    <TableCell key={field.id} style={{ width: 120 }} align='right'>
                       {field.value === true ? (
                         <TaskAltIcon />
                       ) : field.value === false ? (

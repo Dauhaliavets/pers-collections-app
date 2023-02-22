@@ -17,6 +17,7 @@ export const CommentsList: React.FC<ICommentListProps> = ({ currentItem }) => {
         gap: 1,
       }}
     >
+      <Typography align='center'>Comments</Typography>
       {currentItem.comments?.map((comment, ind) => {
         return (
           <Card key={ind} sx={{ minWidth: 275 }}>
