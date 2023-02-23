@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { createItemComment, updateItemFromSocket } from '../../store/slices/itemsSlice/itemsSlice'
 import { TCommentForm } from './itemDetails.types'
@@ -9,12 +9,13 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import io from 'socket.io-client'
 import { API_URL } from '../../constants/api'
+import { Typography } from '@mui/material'
 
 const socket = io(API_URL)
 
 export const CommentForm: React.FC = () => {
   const { itemId } = useParams()
-  const { user } = useAppSelector((state) => state.auth)
+  const { user, isAuth } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const methods = useForm<TCommentForm>({
@@ -44,6 +45,13 @@ export const CommentForm: React.FC = () => {
       socket.off('new-comment')
     }
   }, [])
+
+  if (!isAuth)
+    return (
+      <Typography>
+        You can not create any comments. Please <Link to={'/'}>authenticate</Link>
+      </Typography>
+    )
 
   return (
     <Box
