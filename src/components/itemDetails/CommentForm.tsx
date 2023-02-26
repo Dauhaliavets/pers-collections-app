@@ -31,6 +31,7 @@ export const CommentForm: React.FC = () => {
       const commentBody = {
         sender: user.username,
         text: formData.commentBody,
+        createdDate: new Date().toISOString(),
       }
 
       dispatch(createItemComment({ id: itemId, token: user.token, commentBody }))

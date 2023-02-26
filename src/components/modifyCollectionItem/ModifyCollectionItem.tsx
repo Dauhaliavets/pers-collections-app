@@ -92,6 +92,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
       >
         <FormProvider {...methods}>
           <FormInputText name={'title'} label={'Title'} />
+
           <FormInputText name={'tags'} label={'Tags'} />
         </FormProvider>
         {additionalFields.map((field, i) => (

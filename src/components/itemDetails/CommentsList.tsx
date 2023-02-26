@@ -29,7 +29,7 @@ export const CommentsList: React.FC<ICommentListProps> = ({ currentItem }) => {
                 {comment.text}
               </Typography>
               <Typography align='right' color='text.secondary'>
-                {transformDate(comment.createdAt)}
+                {transformDate(comment.createdDate)}
               </Typography>
             </CardContent>
           </Card>

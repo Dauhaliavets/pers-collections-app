@@ -3,7 +3,7 @@ import { IAdditionalField } from '../../../models/additionalField.model'
 interface IComment {
   sender: string
   text: string
-  createdAt?: string
+  createdDate?: string
 }
 interface IItem {
   _id?: string

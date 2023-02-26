@@ -19,6 +19,7 @@ import { CollectionDetails } from './pages/CollectionDetails'
 import { CollectionItemDetails } from './pages/CollectionItemDetails'
 import { CreateCollectionItem } from './pages/CreateCollectionItem'
 import { EditCollectionItem } from './pages/EditCollectionItem'
+import { SearchResults } from './pages/SearchResults'
 
 import Container from '@mui/material/Container'
 
@@ -45,6 +46,7 @@ function App() {
                 <Route path='signup' element={<SignUpForm />} />
               </Route>
               <Route path='home' element={<HomePage />} />
+              <Route path='search' element={<SearchResults />} />
               <Route path='collections' element={<UserCollections />} />
               <Route path='collections/create' element={<CreateCollection />} />
               <Route path='collections/:collectionId' element={<CollectionDetails />} />
