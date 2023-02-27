@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 
 export const SearchResults = () => {
   const location = useLocation()
-  const query = new URLSearchParams(location.search).get('q')
+  const query = new URLSearchParams(location.search).get('query')
   const { items, isLoading } = useAppSelector((state) => state.items)
   const dispatch = useAppDispatch()
 

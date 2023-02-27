@@ -14,7 +14,7 @@ export const HeaderSearch: React.FC = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
-    navigate(`/search?q=${query}`)
+    navigate(`/search?query=${query}`)
   }
 
   return (
