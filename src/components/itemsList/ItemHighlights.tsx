@@ -1,5 +1,5 @@
 import React from 'react'
-import { IHighlightsProps, ISearchItemHighlightsProps } from './searchItemHighlights.types'
+import { IHighlightsProps, IItemHighlightsProps } from './itemHighlights.types'
 import { HighlightTextTypes } from '../../models/Item.model'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -17,13 +17,13 @@ const Highlights: React.FC<IHighlightsProps> = ({ texts }) => {
   )
 }
 
-export const SearchItemHighlights: React.FC<ISearchItemHighlightsProps> = ({ highlights }) => {
+export const ItemHighlights: React.FC<IItemHighlightsProps> = ({ highlights }) => {
   return (
     <Box>
       {highlights.map((highlight, ind) => {
         return (
           <div key={ind}>
-            <Typography>Field name: {highlight.path}</Typography>
+            <Typography>Field: {highlight.path}</Typography>
             <Highlights texts={highlight.texts} />
           </div>
         )

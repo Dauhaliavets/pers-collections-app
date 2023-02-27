@@ -1,6 +1,6 @@
 import { IHighlight, IHighlightTexts } from '../../models/Item.model'
 
-interface ISearchItemHighlightsProps {
+interface IItemHighlightsProps {
   highlights: IHighlight[]
 }
 
@@ -8,4 +8,4 @@ interface IHighlightsProps {
   texts: IHighlightTexts[]
 }
 
-export type { ISearchItemHighlightsProps, IHighlightsProps }
+export type { IItemHighlightsProps, IHighlightsProps }

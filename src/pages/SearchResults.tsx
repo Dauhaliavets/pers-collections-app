@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchItemsByQuery } from '../store/slices/itemsSlice/itemsSlice'
-import { SearchList } from '../components/searchList/SearchList'
+import { ItemsList } from '../components/itemsList/ItemsList'
 import { Spinner } from '../components/shared/spinner/Spinner'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -25,7 +25,7 @@ export const SearchResults = () => {
       <Typography>
         {items.length} results for &quot;{query}&ldquo;
       </Typography>
-      {!!items.length && <SearchList data={items} />}
+      {!!items.length && <ItemsList data={items} />}
     </Box>
   )
 }

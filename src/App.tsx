@@ -36,7 +36,7 @@ function App() {
         <BrowserRouter>
           <Header />
           <Container
-            maxWidth='lg'
+            maxWidth='xl'
             sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}
           >
             <Routes>

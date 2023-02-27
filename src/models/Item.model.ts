@@ -32,7 +32,7 @@ interface IItem {
   comments: IComment[]
   likes: string[]
   extraFields?: IAdditionalField[]
-  timestamps?: { createdAt: string }
+  createdAt: string
   highlights?: IHighlight[]
 }
 

@@ -1,10 +1,8 @@
 import React from 'react'
 import { useAppSelector } from '../../store'
 import { ICollectionsWrapperProps } from './collectionWrapperProps'
-
 import { Spinner } from '../shared/spinner/Spinner'
 import { CollectionCard } from './collectionCard/CollectionCard'
-
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Alert from '@mui/material/Alert'
@@ -20,7 +18,7 @@ export const CollectionsWrapper: React.FC<ICollectionsWrapperProps> = ({
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant='h4' component='h3'>
+        <Typography variant='h5' component='h4'>
           {title}
         </Typography>
         {children}
