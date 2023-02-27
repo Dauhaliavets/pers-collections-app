@@ -1,22 +1,17 @@
 import React from 'react'
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  Select,
-  DialogActions,
-  Button,
-  MenuItem,
-  TextField,
-} from '@mui/material'
-import { additionalFields } from '../../constants/additionalFileds'
-import { useDialogMenu } from '../../hooks/useDialogMenu'
-
-interface IDialogMenuProps {
-  createAdditionalField: (fieldType: string, fieldLabel: string) => void
-}
+import { IDialogMenuProps } from './dialogMenu.types'
+import { useDialogMenu } from '../../../hooks/useDialogMenu'
+import { additionalFields } from '../../../constants/additionalFileds'
+import Select from '@mui/material/Select'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
 
 export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }) => {
   const {
