@@ -1,21 +1,4 @@
-import { IAdditionalField } from '../../../models/additionalField.model'
-
-interface IComment {
-  sender: string
-  text: string
-  createdDate?: string
-}
-interface IItem {
-  _id?: string
-  collectionId: string
-  title: string
-  tags: string[]
-  comments: IComment[]
-  likes: string[]
-  extraFields?: IAdditionalField[]
-  timestamps?: { createdAt: string }
-}
-
+import { IComment, IItem } from '../../../models/Item.model'
 interface ItemsState {
   items: IItem[]
   isLoading: boolean
@@ -28,6 +11,10 @@ interface IRejectValue {
 
 interface FetchItemsByCollectionIdRequest {
   id: string
+}
+
+interface FetchItemsByQueryRequest {
+  query: string
 }
 
 interface CreateItemRequest {
@@ -53,10 +40,10 @@ interface CreateItemCommentRequest {
 }
 
 export type {
-  IItem,
   ItemsState,
   IRejectValue,
   FetchItemsByCollectionIdRequest,
+  FetchItemsByQueryRequest,
   CreateItemRequest,
   DeleteItemRequest,
   UpdateItemRequest,

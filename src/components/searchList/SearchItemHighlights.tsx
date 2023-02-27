@@ -1,24 +1,14 @@
 import React from 'react'
-import { HighlightResponse } from '../../models/searchResponse.model'
+import { IHighlightsProps, ISearchItemHighlightsProps } from './searchItemHighlights.types'
+import { HighlightTextTypes } from '../../models/Item.model'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-interface ISearchItemHighlightsProps {
-  highlights: HighlightResponse[]
-}
-
-interface IHighlightsProps {
-  texts: {
-    value: string
-    type: 'text' | 'hit'
-  }[]
-}
-
-const Highlights = ({ texts }: IHighlightsProps) => {
+const Highlights: React.FC<IHighlightsProps> = ({ texts }) => {
   return (
     <>
       {texts.map((text, ind) => {
-        if (text.type === 'hit') {
+        if (text.type === HighlightTextTypes.Hit) {
           return <mark key={ind}>{text.value}</mark>
         }
         return <span key={ind}>{text.value}</span>
@@ -33,7 +23,7 @@ export const SearchItemHighlights: React.FC<ISearchItemHighlightsProps> = ({ hig
       {highlights.map((highlight, ind) => {
         return (
           <div key={ind}>
-            <Typography>Filed: {highlight.path}</Typography>
+            <Typography>Field name: {highlight.path}</Typography>
             <Highlights texts={highlight.texts} />
           </div>
         )

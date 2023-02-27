@@ -1,4 +1,4 @@
-import { IItem } from '../store/slices/itemsSlice/model'
+import { IItem } from '../models/Item.model'
 
 const transformValueForField = (value: string | number | boolean) => {
   const typeOf = typeof value

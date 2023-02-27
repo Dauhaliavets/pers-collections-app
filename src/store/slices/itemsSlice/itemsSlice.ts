@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit'
 import { API_URL } from '../../../constants/api'
+import { IItem } from '../../../models/Item.model'
 import {
-  IItem,
   ItemsState,
   IRejectValue,
   FetchItemsByCollectionIdRequest,
@@ -9,6 +9,7 @@ import {
   DeleteItemRequest,
   UpdateItemRequest,
   CreateItemCommentRequest,
+  FetchItemsByQueryRequest,
 } from './model'
 
 const initialState: ItemsState = {
@@ -57,6 +58,28 @@ export const fetchItemsByCollectionId = createAsyncThunk<
     return items
   } catch (error) {
     return rejectWithValue({ message: 'Error fetching Items By collection ID' })
+  }
+})
+
+export const fetchItemsByQuery = createAsyncThunk<
+  IItem[],
+  FetchItemsByQueryRequest,
+  { rejectValue: IRejectValue }
+>('items/fetchItemsByQuery', async ({ query }, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}search?query=${query}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    if (!response.ok) {
+      const data = await response.json()
+      return rejectWithValue(data)
+    }
+    const items = (await response.json()) as IItem[]
+    return items
+  } catch (error) {
+    return rejectWithValue({ message: 'Error fetching Items By QUERY' })
   }
 })
 
@@ -180,6 +203,11 @@ const itemsSlice = createSlice({
         state.isLoading = false
         state.error = null
       })
+      .addCase(fetchItemsByQuery.fulfilled, (state, { payload }) => {
+        state.items = payload
+        state.isLoading = false
+        state.error = null
+      })
       .addCase(createItem.fulfilled, (state, { payload }) => {
         state.items = [...state.items, payload]
         state.isLoading = false
@@ -204,6 +232,7 @@ const itemsSlice = createSlice({
         isAnyOf(
           fetchItems.pending,
           fetchItemsByCollectionId.pending,
+          fetchItemsByQuery.pending,
           createItem.pending,
           deleteItemById.pending,
           updateItemById.pending,
@@ -218,6 +247,7 @@ const itemsSlice = createSlice({
         isAnyOf(
           fetchItems.rejected,
           fetchItemsByCollectionId.rejected,
+          fetchItemsByQuery.rejected,
           createItem.rejected,
           deleteItemById.rejected,
           updateItemById.rejected,

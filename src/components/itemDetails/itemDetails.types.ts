@@ -1,4 +1,4 @@
-import { IItem } from '../../store/slices/itemsSlice/model'
+import { IItem } from '../../models/Item.model'
 
 interface ICommentListProps {
   currentItem: IItem

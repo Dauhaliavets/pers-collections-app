@@ -1,5 +1,5 @@
+import { IItem } from '../../models/Item.model'
 import { ICollection } from '../../store/slices/collectionsSlice/model'
-import { IItem } from '../../store/slices/itemsSlice/model'
 
 interface ICollectionItemsProps {
   items: IItem[]
