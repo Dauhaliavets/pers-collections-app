@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../store'
-import { ICollection } from '../store/slices/collectionsSlice/model'
+import { ICollection } from '../store/slices/collectionsSlice/collectionsSlice.types'
 
 type TCollectionWithQuantity = ICollection & { quantity: number }
 

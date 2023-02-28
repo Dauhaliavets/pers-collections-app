@@ -1,14 +1,4 @@
-import { IAdditionalField } from '../../../models/additionalField.model'
-
-interface ICollection {
-  _id?: string
-  ownerId: string
-  title: string
-  description: string
-  topic: string
-  imageUrl?: string
-  extraFields?: IAdditionalField[]
-}
+import { ICollection } from '../../../models/Collection.model'
 
 interface CollectionsState {
   collections: ICollection[]

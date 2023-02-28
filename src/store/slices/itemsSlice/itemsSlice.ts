@@ -10,7 +10,7 @@ import {
   UpdateItemRequest,
   CreateItemCommentRequest,
   FetchItemsByQueryRequest,
-} from './model'
+} from './itemsSlice.types'
 
 const initialState: ItemsState = {
   items: [],

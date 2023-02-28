@@ -1,10 +1,4 @@
-interface IUser {
-  id: string
-  username: string
-  email: string
-  blockedStatus: boolean
-  role: 'ADMIN' | 'USER'
-}
+import { IUser } from '../../../models/User.model'
 
 interface UsersState {
   users: IUser[]
@@ -37,7 +31,6 @@ interface UpdateUserByIdRequest {
 }
 
 export type {
-  IUser,
   UsersState,
   IRejectValue,
   FetchUsersRequest,

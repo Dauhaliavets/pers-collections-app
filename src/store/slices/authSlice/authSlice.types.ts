@@ -1,14 +1,4 @@
-enum Role {
-  Admin = 'ADMIN',
-  User = 'USER',
-}
-
-interface IAuthUser {
-  id: string
-  username: string
-  role: Role
-  token: string
-}
+import { IAuthUser } from '../../../models/User.model'
 
 interface AuthState {
   isAuth: boolean
@@ -32,5 +22,4 @@ type SignUpRequest = {
   password: string
 }
 
-export { Role }
-export type { IAuthUser, AuthState, IRejectValue, LoginRequest, SignUpRequest }
+export type { AuthState, IRejectValue, LoginRequest, SignUpRequest }

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { API_URL } from '../../../constants/api'
-import { AuthState, IAuthUser, IRejectValue, LoginRequest, SignUpRequest } from './model'
+import { IAuthUser } from '../../../models/User.model'
+import { AuthState, IRejectValue, LoginRequest, SignUpRequest } from './authSlice.types'
 
 const initialState: AuthState = {
   isAuth: false,

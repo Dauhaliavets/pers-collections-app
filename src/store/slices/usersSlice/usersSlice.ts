@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { API_URL } from '../../../constants/api'
+import { IUser } from '../../../models/User.model'
 import {
   DeleteUserByIdRequest,
   FetchUserByIdRequest,
   FetchUsersRequest,
   IRejectValue,
-  IUser,
   UpdateUserByIdRequest,
   UsersState,
-} from './model'
+} from './usersSlice.types'
 
 const initialState: UsersState = {
   users: [],

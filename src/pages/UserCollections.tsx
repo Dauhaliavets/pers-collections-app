@@ -15,7 +15,10 @@ export const UserCollections = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '20px' }}>
       <CollectionsWrapper title='Collections' collections={userCollections}>
-        <Button variant='contained' onClick={() => navigate('create')}>
+        <Button
+          variant='contained'
+          onClick={() => navigate('/collections/create', { relative: 'path' })}
+        >
           Create New Collection
         </Button>
       </CollectionsWrapper>

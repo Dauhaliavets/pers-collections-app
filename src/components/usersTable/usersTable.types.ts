@@ -1,5 +1,4 @@
-import { IAuthUser } from '../../store/slices/authSlice/model'
-import { IUser } from '../../store/slices/usersSlice/model'
+import { IAuthUser, IUser } from '../../models/User.model'
 
 interface IUsersTableProps {
   currentUser: IAuthUser

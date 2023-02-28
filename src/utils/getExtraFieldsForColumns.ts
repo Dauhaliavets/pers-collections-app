@@ -1,5 +1,5 @@
 import { FieldType } from '../models/fieldTypes'
-import { ICollection } from '../store/slices/collectionsSlice/model'
+import { ICollection } from '../store/slices/collectionsSlice/collectionsSlice.types'
 
 const getWidthFromItemType = (type: string): number => {
   switch (type) {

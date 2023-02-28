@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../../../store'
-import { Role } from '../../../../store/slices/authSlice/model'
+import { Role } from '../../../../models/User.model'
 import { IAccessiblePagesListProps } from './accessiblePagesList.types'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'

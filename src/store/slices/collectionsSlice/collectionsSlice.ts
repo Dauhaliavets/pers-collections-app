@@ -8,7 +8,7 @@ import {
   CreateCollectionRequest,
   DeleteCollectionRequest,
   UpdateCollectionRequest,
-} from './model'
+} from './collectionsSlice.types'
 
 const initialState: CollectionsState = {
   collections: [],
