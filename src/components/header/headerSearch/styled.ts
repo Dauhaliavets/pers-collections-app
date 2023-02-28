@@ -26,6 +26,18 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }))
 
+export const ClearIconWrapper = styled('div')(({ theme }) => ({
+  // padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  // pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}))
+
 export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {

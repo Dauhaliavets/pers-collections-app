@@ -1,7 +1,6 @@
 import React, { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import ClearIcon from '@mui/icons-material/Clear'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
@@ -37,10 +36,6 @@ export const HeaderSearch: React.FC = () => {
           </ClearIconWrapper>
         )}
       </Search>
-
-      <Button type='submit' variant='contained' size={'small'} sx={{ textTransform: 'none' }}>
-        Search
-      </Button>
     </Box>
   )
 }

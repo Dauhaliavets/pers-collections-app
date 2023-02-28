@@ -1,11 +1,10 @@
 import React from 'react'
 import { GlobalContext } from '../../../../contexts/GlobalContext'
 import { Locales, Themes, TLocale } from '../../../../models/GlobalContextModel'
-
+import { MaterialUISwitch } from '../../../shared/switch/materialUIswitch'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
-import { MaterialUISwitch } from '../../../material/switch/switch'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
