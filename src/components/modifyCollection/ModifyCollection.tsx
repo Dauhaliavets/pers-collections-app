@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store'
 import {
   createCollection,
@@ -38,6 +38,8 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
   imageUrl = '',
   extraFields = [],
 }) => {
+  const { state } = useLocation()
+  const { ownerId } = state || ''
   const { collectionId } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -71,16 +73,15 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
 
   const onSubmit: SubmitHandler<CollectionForm> = (formData) => {
     if (isValid) {
-      if (action === 'create' && user) {
-        const { id, token } = user
+      if (action === 'create' && user && ownerId) {
         const body = {
           ...formData,
-          ownerId: id,
+          ownerId,
           imageUrl: imgUrl,
           extraFields: additionalFields,
         }
 
-        dispatch(createCollection({ token, body })).then(() => navigate(-1))
+        dispatch(createCollection({ token: user.token, body })).then(() => navigate(-1))
       } else if (action === 'edit' && user && collectionId) {
         const { token } = user
         const newBody = {

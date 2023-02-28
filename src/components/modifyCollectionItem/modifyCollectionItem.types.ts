@@ -2,7 +2,7 @@ import { IAdditionalField } from '../../models/additionalField.model'
 
 type MainFields = {
   title: string
-  tags: string
+  tags: string[]
 }
 
 interface IModifyCollectionItemProps {

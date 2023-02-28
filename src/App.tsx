@@ -20,6 +20,7 @@ import { CollectionItemDetails } from './pages/CollectionItemDetails'
 import { CreateCollectionItem } from './pages/CreateCollectionItem'
 import { EditCollectionItem } from './pages/EditCollectionItem'
 import { SearchResults } from './pages/SearchResults'
+import { Collections } from './pages/Collections'
 
 import Container from '@mui/material/Container'
 
@@ -47,7 +48,8 @@ function App() {
               </Route>
               <Route path='home' element={<HomePage />} />
               <Route path='search' element={<SearchResults />} />
-              <Route path='collections' element={<UserCollections />} />
+              <Route path='collections' element={<Collections />} />
+              <Route path='collections/owner/:ownerId' element={<UserCollections />} />
               <Route path='collections/create' element={<CreateCollection />} />
               <Route path='collections/:collectionId' element={<CollectionDetails />} />
               <Route path='collections/:collectionId/edit' element={<EditCollection />} />

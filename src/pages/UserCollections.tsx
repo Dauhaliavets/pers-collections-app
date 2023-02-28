@@ -17,7 +17,7 @@ export const UserCollections = () => {
       <CollectionsWrapper title='Collections' collections={userCollections}>
         <Button
           variant='contained'
-          onClick={() => navigate('/collections/create', { relative: 'path' })}
+          onClick={() => navigate('/collections/create', { relative: 'path', state: { ownerId } })}
         >
           Create New Collection
         </Button>

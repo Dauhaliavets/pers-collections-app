@@ -5,16 +5,18 @@ import { useAppDispatch, useAppSelector } from '../../store'
 import { createItem, updateItemById } from '../../store/slices/itemsSlice/itemsSlice'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
 import { IModifyCollectionItemProps, MainFields } from './modifyCollectionItem.types'
-import { getSubstrings } from '../../utils/getSubstrings'
 import { CheckFilledAdditionalFields } from '../../utils/checkFilledAdditionalFields'
 import { PrevPageButton } from '../shared/buttons/PrevPageButton'
 import { FormElementSwitch } from '../shared/formElementSwitch/FormElementSwitch'
 import { Spinner } from '../shared/spinner/Spinner'
-import { FormInputText } from '../shared/formComponents/FormInputText'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import { v4 as uuidv4 } from 'uuid'
+import { fetchTagsByQuery } from '../../api/fetchTagsByQuery'
 
 export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   header,
@@ -23,6 +25,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   tags = [],
   extraFields = [],
 }) => {
+  const [options, setOptions] = React.useState<string[]>([])
   const { collectionId, itemId } = useParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -34,24 +37,22 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   const isFilledAdditionalFields = CheckFilledAdditionalFields(additionalFields)
 
   const methods = useForm({
-    defaultValues: {
+    values: {
       title: title,
-      tags: tags.join(' '),
+      tags: tags,
     },
   })
 
-  const {
-    handleSubmit,
-    formState: { isValid },
-  } = methods
+  const { handleSubmit, formState, register, getValues, setValue } = methods
 
-  const onSubmit: SubmitHandler<MainFields> = (mainFields) => {
+  const onSubmit: SubmitHandler<MainFields> = () => {
+    const [title, tags] = getValues(['title', 'tags'])
     if (action === 'create') {
       if (collectionId && user && isFilledAdditionalFields) {
         const newBody = {
           collectionId,
-          title: mainFields.title,
-          tags: getSubstrings(mainFields.tags),
+          title: title,
+          tags: tags,
           extraFields: additionalFields,
         }
 
@@ -64,8 +65,8 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
     if (action === 'edit') {
       if (user && itemId && isFilledAdditionalFields) {
         const newBody = {
-          title: mainFields.title,
-          tags: getSubstrings(mainFields.tags),
+          title: title,
+          tags: tags,
           extraFields: additionalFields,
         }
 
@@ -73,6 +74,16 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
           navigate(`/collections/${collectionId}`),
         )
       }
+    }
+  }
+
+  const handleInputChange = async (value: string) => {
+    if (value.length > 2) {
+      const tags = await fetchTagsByQuery(value)
+      const filterTags = [...new Set(tags)]
+      setOptions(filterTags)
+    } else {
+      setOptions([])
     }
   }
 
@@ -91,9 +102,33 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
         sx={{ position: 'relative' }}
       >
         <FormProvider {...methods}>
-          <FormInputText name={'title'} label={'Title'} />
+          <TextField
+            {...register('title')}
+            label={'Title'}
+            type={'text'}
+            variant='outlined'
+            autoComplete='off'
+          />
 
-          <FormInputText name={'tags'} label={'Tags'} />
+          <Autocomplete
+            {...register('tags')}
+            sx={{ width: '100%', '& .MuiSvgIcon-root': { color: '#ffffff' } }}
+            onInputChange={(_, newValue) => handleInputChange(newValue)}
+            multiple
+            freeSolo
+            clearOnBlur={false}
+            options={options}
+            getOptionLabel={(option) => option}
+            renderOption={(props, option) => {
+              return (
+                <li key={uuidv4()} {...props}>
+                  {option}
+                </li>
+              )
+            }}
+            renderInput={(params) => <TextField {...params} label='Tags' />}
+            onChange={(_, newValue) => setValue('tags', newValue)}
+          />
         </FormProvider>
         {additionalFields.map((field, i) => (
           <Box
@@ -111,7 +146,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
         <Button
           variant='contained'
           type='submit'
-          disabled={!isValid || !isFilledAdditionalFields}
+          disabled={!formState.isValid || !isFilledAdditionalFields}
           sx={{ alignSelf: 'flex-end' }}
         >
           Save
