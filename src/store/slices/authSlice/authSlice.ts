@@ -14,7 +14,7 @@ export const logIn = createAsyncThunk<IAuthUser, LoginRequest, { rejectValue: IR
   'auth/signIn',
   async (loginObj, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}auth/signIn`, {
+      const response: Response = await fetch(`${API_URL}auth/signIn`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginObj),
@@ -56,7 +56,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logOut: (state) => (state = initialState),
+    logOut: (state) => {
+      state = initialState
+      return state
+    },
   },
   extraReducers: (builder) => {
     builder
