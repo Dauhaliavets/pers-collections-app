@@ -12,6 +12,7 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }) => {
   const {
@@ -23,6 +24,7 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
     handleOpenDialogMenu,
     handleCloseDialogMenu,
   } = useDialogMenu()
+  const intl = useIntl()
 
   const onSubmit = () => {
     if (fieldType && fieldLabel) {
@@ -34,7 +36,7 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
   return (
     <>
       <Button variant='outlined' onClick={handleOpenDialogMenu}>
-        New Field
+        <FormattedMessage id='app.collection.dialogMenu.button.newField' />
       </Button>
       <Dialog
         open={open}
@@ -45,7 +47,9 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
           },
         }}
       >
-        <DialogTitle>New field</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage id='app.collection.dialogMenu.title' />
+        </DialogTitle>
         <DialogContent
           sx={{
             display: 'flex',
@@ -55,11 +59,13 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
           }}
         >
           <FormControl fullWidth size='small'>
-            <InputLabel id='select-type-label'>Type</InputLabel>
+            <InputLabel id='select-type-label'>
+              <FormattedMessage id='app.collection.dialogMenu.field.type' />
+            </InputLabel>
             <Select
               labelId='select-type-label'
               value={fieldType}
-              label='Type'
+              label={intl.formatMessage({ id: 'app.collection.dialogMenu.field.type' })}
               onChange={handleChangeFieldType}
             >
               {additionalFields.map((field, ind) => (
@@ -70,7 +76,7 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
             </Select>
           </FormControl>
           <TextField
-            label='Label'
+            label={intl.formatMessage({ id: 'app.collection.dialogMenu.field.name' })}
             type='text'
             value={fieldLabel}
             onChange={handleChangeFieldLabel}
@@ -78,9 +84,11 @@ export const DialogMenu: React.FC<IDialogMenuProps> = ({ createAdditionalField }
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialogMenu}>Cancel</Button>
+          <Button onClick={handleCloseDialogMenu}>
+            <FormattedMessage id='app.collection.dialogMenu.button.cancel' />
+          </Button>
           <Button onClick={onSubmit} variant='contained' disabled={!fieldType || !fieldLabel}>
-            Add
+            <FormattedMessage id='app.collection.dialogMenu.button.add' />
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { GlobalContext } from '../../../../contexts/GlobalContext'
-import { Locales, TLocale } from '../../../../models/GlobalContextModel'
+// import { Locales, TLocale } from '../../../../models/GlobalContextModel'
 import { Themes } from '../../../../models/Theme.model'
 import { MaterialUISwitch } from '../../../shared/switch/materialUIswitch'
 import List from '@mui/material/List'
@@ -10,6 +10,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import { useTheme } from '@mui/material/styles'
 import { ColorModeContext } from '../../../../hooks/useTheme'
+import { FormattedMessage } from 'react-intl'
+import { Locales, TLocale } from '../../../../models/Locale.model'
 
 export const SettingsList = () => {
   const { locale, setLocale } = React.useContext(GlobalContext)
@@ -22,13 +24,14 @@ export const SettingsList = () => {
 
   const handleChangeLocale = (event: SelectChangeEvent) => {
     setLocale(event.target.value as TLocale)
-    localStorage.setItem('locale', locale)
   }
 
   return (
     <List sx={{ padding: '8px 16px' }}>
       <ListItem disablePadding>
-        <ListItemText primary={'Theme'} />
+        <ListItemText>
+          <FormattedMessage id='app.header.drawer.settings.theme' />
+        </ListItemText>
         <MaterialUISwitch
           sx={{ m: 1 }}
           checked={theme.palette.mode === Themes.Dark ? true : false}
@@ -36,10 +39,12 @@ export const SettingsList = () => {
         />
       </ListItem>
       <ListItem disablePadding>
-        <ListItemText primary={'Locale'} />
-        <Select value={locale} onChange={handleChangeLocale} sx={{ minWidth: 150 }} size='small'>
-          <MenuItem value={Locales.EN}>En</MenuItem>
-          <MenuItem value={Locales.RU}>Ru</MenuItem>
+        <ListItemText>
+          <FormattedMessage id='app.header.drawer.settings.language' />
+        </ListItemText>
+        <Select value={locale} onChange={handleChangeLocale} sx={{ minWidth: 100 }} size='small'>
+          <MenuItem value={Locales.En}>En</MenuItem>
+          <MenuItem value={Locales.Ru}>Ru</MenuItem>
         </Select>
       </ListItem>
     </List>

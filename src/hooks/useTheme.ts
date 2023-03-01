@@ -8,6 +8,7 @@ const useThemeMode = () => {
   const [mode, setMode] = React.useState<Themes>(
     (localStorage.getItem('theme') as Themes) || Themes.Light,
   )
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {

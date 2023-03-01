@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import HowToRegIcon from '@mui/icons-material/HowToReg'
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { FormattedMessage } from 'react-intl'
 
 interface IAuthOptionsProps {
   toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void
@@ -30,7 +31,9 @@ export const AuthOptions: React.FC<IAuthOptionsProps> = ({ toggleDrawer }) => {
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary={'Logout'} />
+            <ListItemText>
+              <FormattedMessage id='app.buttons.logout' />
+            </ListItemText>
           </ListItemButton>
         </ListItem>
       </List>
@@ -43,7 +46,9 @@ export const AuthOptions: React.FC<IAuthOptionsProps> = ({ toggleDrawer }) => {
           <ListItemIcon>
             <LoginIcon />
           </ListItemIcon>
-          <ListItemText primary={'Login'} />
+          <ListItemText>
+            <FormattedMessage id='app.buttons.login' />
+          </ListItemText>
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding onClick={toggleDrawer(false)}>
@@ -51,7 +56,9 @@ export const AuthOptions: React.FC<IAuthOptionsProps> = ({ toggleDrawer }) => {
           <ListItemIcon>
             <HowToRegIcon />
           </ListItemIcon>
-          <ListItemText primary={'Registration'} />
+          <ListItemText>
+            <FormattedMessage id='app.buttons.registration' />
+          </ListItemText>
         </ListItemButton>
       </ListItem>
     </List>

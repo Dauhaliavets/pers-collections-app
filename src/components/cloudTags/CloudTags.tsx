@@ -6,8 +6,9 @@ import { fetchCloudTags } from '../../api/fetchCloudTags'
 import { Spinner } from '../shared/spinner/Spinner'
 import Typography from '@mui/material/Typography'
 import { replaceWithoutHashAsFirst } from '../../utils/replaceWithoutHashAsFirst'
+import { ICloudTagsProps } from './cloudTags.types'
 
-export const CloudTags = () => {
+export const CloudTags: React.FC<ICloudTagsProps> = ({ title }) => {
   const [tags, setTags] = React.useState<ICloudTag[]>([])
   const [loading, setLoading] = React.useState<boolean>(false)
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ export const CloudTags = () => {
   return (
     <>
       <Typography variant='h5' component='h4'>
-        Cloud Tags
+        {title}
       </Typography>
       {loading && <Spinner size={30} />}
       {tags && <TagCloud minSize={16} maxSize={36} tags={tags} onClick={onClick} />}

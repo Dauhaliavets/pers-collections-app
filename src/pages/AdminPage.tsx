@@ -6,6 +6,7 @@ import { UsersTable } from '../components/usersTable/UsersTable'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
+import { FormattedMessage } from 'react-intl'
 
 export const AdminPage: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth)
@@ -21,7 +22,7 @@ export const AdminPage: React.FC = () => {
   return (
     <Container component={'div'} sx={{ position: 'relative' }}>
       <Typography variant='h5' component='h4'>
-        Admin Panel
+        <FormattedMessage id='app.adminPage.title' />
       </Typography>
       {isLoading && <Spinner />}
       {error && <Alert severity='error'>{error.message}</Alert>}

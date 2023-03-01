@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
 import { Spinner } from '../../shared/spinner/Spinner'
 import { IDropZoneProps } from './dropZone.types'
+import { FormattedMessage } from 'react-intl'
 
 export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
   const [isLoadingImg, setIsLoadingImg] = React.useState<boolean>(false)
@@ -48,15 +49,22 @@ export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <Box p={1} border={1} borderColor={'#ccc'} borderRadius={2} {...getRootProps()}>
+    <Box
+      p={1}
+      border={1}
+      borderColor={'#ccc'}
+      borderRadius={2}
+      sx={{ ':hover': { cursor: 'pointer', border: '1px solid green' } }}
+      {...getRootProps()}
+    >
       <input {...getInputProps()} />
       {isDragActive ? (
         <Typography variant='caption' display='block'>
-          Drop the files here ...
+          <FormattedMessage id='app.collection.formFields.dragZone.drop' />
         </Typography>
       ) : (
         <Typography variant='caption' display='block'>
-          Dragn drop some files here, or click to select files
+          <FormattedMessage id='app.collection.formFields.dragZone.dragn' />
         </Typography>
       )}
       {isLoadingImg && (

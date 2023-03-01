@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
 import Link from '@mui/material/Link'
+import { FormattedMessage } from 'react-intl'
 
 export const Welcome: React.FC = () => {
   const navigate = useNavigate()
@@ -15,10 +16,10 @@ export const Welcome: React.FC = () => {
     >
       <Stack spacing={2}>
         <Button variant='contained' onClick={() => navigate('auth/login')}>
-          Login
+          <FormattedMessage id='app.buttons.login' />
         </Button>
         <Button variant='contained' onClick={() => navigate('auth/signup')}>
-          Registration
+          <FormattedMessage id='app.buttons.registration' />
         </Button>
         <Link
           component='button'
@@ -28,7 +29,7 @@ export const Welcome: React.FC = () => {
             navigate('/home')
           }}
         >
-          Continue as guest
+          <FormattedMessage id='app.welcomePage.text.continue' />
         </Link>
       </Stack>
     </Paper>

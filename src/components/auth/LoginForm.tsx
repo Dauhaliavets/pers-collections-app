@@ -11,11 +11,13 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 export const LoginForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const intl = useIntl()
 
   const methods = useForm<LoginInputs>({
     defaultValues: {
@@ -48,23 +50,23 @@ export const LoginForm: React.FC = () => {
       sx={{ position: 'relative' }}
     >
       <Typography variant='h4' component='h4' textAlign={'center'}>
-        Authorization
+        <FormattedMessage id='app.auth.loginForm.title' />
       </Typography>
       <FormProvider {...methods}>
         <FormInputText
           name={'username'}
-          label={'Username'}
+          label={intl.formatMessage({ id: 'app.auth.loginForm.nameField.label' })}
           rules={authFormValidationRules.username}
         />
         <FormInputText
           name={'password'}
-          label={'Password'}
+          label={intl.formatMessage({ id: 'app.auth.loginForm.passwordField.label' })}
           type={'password'}
           rules={authFormValidationRules.password}
         />
       </FormProvider>
       <Button variant='contained' type='submit'>
-        Login
+        <FormattedMessage id='app.buttons.login' />
       </Button>
       {isLoading && <Spinner />}
       {error && <Alert severity='error'>{error.message}</Alert>}

@@ -10,6 +10,7 @@ import Button from '@mui/material/Button'
 import io from 'socket.io-client'
 import { API_URL } from '../../constants/api'
 import { Typography } from '@mui/material'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const socket = io(API_URL)
 
@@ -17,6 +18,7 @@ export const CommentForm: React.FC = () => {
   const { itemId } = useParams()
   const { user, isAuth } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
+  const intl = useIntl()
 
   const methods = useForm<TCommentForm>({
     defaultValues: {
@@ -50,7 +52,10 @@ export const CommentForm: React.FC = () => {
   if (!isAuth)
     return (
       <Typography>
-        You can not create any comments. Please <Link to={'/'}>authenticate</Link>
+        <FormattedMessage id='app.collectionItemDetails.comments.unauthorazedMessage' />
+        <Link to={'/'}>
+          <FormattedMessage id='app.collectionItemDetails.comments.unauthorazedMessage.link' />
+        </Link>
       </Typography>
     )
 
@@ -61,10 +66,13 @@ export const CommentForm: React.FC = () => {
       sx={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 400 }}
     >
       <FormProvider {...methods}>
-        <FormInputTextarea name={'commentBody'} label={'Comment'} />
+        <FormInputTextarea
+          name={'commentBody'}
+          label={intl.formatMessage({ id: 'app.collectionItemDetails.comments.form.name' })}
+        />
       </FormProvider>
       <Button variant='contained' type='submit' sx={{ alignSelf: 'flex-end' }}>
-        Post comment
+        <FormattedMessage id='app.collectionItemDetails.comments.submitButton' />
       </Button>
     </Box>
   )

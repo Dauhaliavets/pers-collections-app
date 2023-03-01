@@ -9,9 +9,12 @@ import { useSortedItems } from '../hooks/useSortedItems'
 import { useSortedCollections } from '../hooks/useCollections'
 import Box from '@mui/material/Box'
 import { QUANTITY_ON_HOME_PAGE } from '../constants/homePage'
+import { FormattedMessage, useIntl } from 'react-intl'
+import Typography from '@mui/material/Typography'
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch()
+  const intl = useIntl()
 
   React.useEffect(() => {
     dispatch(fetchCollections())
@@ -26,9 +29,15 @@ export const HomePage: React.FC = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '20px' }}>
-      <CloudTags />
-      <ItemsList title='Last created Items' data={items} />
-      <CollectionsWrapper title='Most largest collections' collections={collections} />
+      <CloudTags title={intl.formatMessage({ id: 'app.main.titles.cloudTags' })} />
+      <Typography variant='h5' component='h4'>
+        <FormattedMessage id='app.main.titles.lastCreatedItems' />
+      </Typography>
+      <ItemsList data={items} />
+      <CollectionsWrapper
+        title={intl.formatMessage({ id: 'app.main.titles.mostLargestCollections' })}
+        collections={collections}
+      />
     </Box>
   )
 }

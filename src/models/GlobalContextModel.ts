@@ -1,14 +1,8 @@
-enum Locales {
-  EN = 'EN',
-  RU = 'RU',
-}
-
-type TLocale = Locales.EN | Locales.RU
+import { Locales, TLocale } from './Locale.model'
 
 type TGlobalContext = {
   locale: TLocale
-  setLocale: React.Dispatch<React.SetStateAction<TLocale>>
+  setLocale: (value: Locales) => void
 }
 
-export { Locales }
-export type { TGlobalContext, TLocale }
+export type { TGlobalContext }

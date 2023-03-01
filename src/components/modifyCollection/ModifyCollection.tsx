@@ -28,6 +28,7 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 export const ModifyCollection: React.FC<IModifyCollection> = ({
   header,
@@ -43,6 +44,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
   const { collectionId } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const intl = useIntl()
 
   const { user } = useAppSelector((state) => state.auth)
   const { isLoading, error } = useAppSelector((state) => state.collections)
@@ -118,18 +120,28 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
             {header}
           </Typography>
           <FormProvider {...methods}>
-            <FormInputText name={'title'} label={'Title'} rules={validationRules.title} />
+            <FormInputText
+              name={'title'}
+              label={intl.formatMessage({ id: 'app.collection.formFields.title' })}
+              rules={validationRules.title}
+            />
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
                 <Tabs value={tabValue} onChange={handleChangeTabValue}>
-                  <Tab label='Edit' />
-                  <Tab label='Preview' />
+                  <Tab
+                    label={intl.formatMessage({ id: 'app.collection.formFields.description.edit' })}
+                  />
+                  <Tab
+                    label={intl.formatMessage({
+                      id: 'app.collection.formFields.description.preview',
+                    })}
+                  />
                 </Tabs>
               </Box>
               <TabPanel value={tabValue} index={0}>
                 <FormInputTextarea
                   name={'description'}
-                  label={'Description'}
+                  label={intl.formatMessage({ id: 'app.collection.formFields.description' })}
                   rules={validationRules.description}
                 />
               </TabPanel>
@@ -139,21 +151,24 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
             </Box>
             <FormInputDropdown
               name={'topic'}
-              label={'Topic'}
+              label={intl.formatMessage({ id: 'app.collection.formFields.topic' })}
               rules={validationRules.topic}
               selectOptions={topics}
             />
           </FormProvider>
           <DropZone imgUrl={imgUrl} setImgUrl={setImgUrl} />
           <Button variant='contained' type='submit' style={{ alignSelf: 'flex-end' }}>
-            {action === 'create' ? 'Create Collection' : 'Update Collection'}
+            {action === 'create' ? (
+              <FormattedMessage id='app.buttons.editCollection' />
+            ) : (
+              <FormattedMessage id='app.buttons.updateCollection' />
+            )}
           </Button>
           {isLoading && <Spinner />}
           {error && <Alert severity='error'>{error.message}</Alert>}
         </Stack>
-
         <Typography variant='h6' component='h6' align='center'>
-          Optional field settings
+          <FormattedMessage id='app.main.titles.optionalFields' />
         </Typography>
         {action === 'create' && <DialogMenu createAdditionalField={createAdditionalField} />}
         <CollectionAdditionalFields

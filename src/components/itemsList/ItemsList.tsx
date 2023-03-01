@@ -9,19 +9,13 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
+import { FormattedMessage } from 'react-intl'
 
-export const ItemsList: React.FC<IItemsListProps> = ({ title, data }) => {
+export const ItemsList: React.FC<IItemsListProps> = ({ data }) => {
   const navigate = useNavigate()
 
   return (
     <Grid container spacing={2}>
-      {title && (
-        <Grid item xs={12}>
-          <Typography variant='h5' component='h4'>
-            {title}
-          </Typography>
-        </Grid>
-      )}
       {data.map((item) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
           <Card sx={{ minWidth: 275 }}>
@@ -32,7 +26,7 @@ export const ItemsList: React.FC<IItemsListProps> = ({ title, data }) => {
               {item.highlights && (
                 <>
                   <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                    Coincidance
+                    <FormattedMessage id='app.itemsList.card.subtitle' />
                   </Typography>
                   <ItemHighlights highlights={item.highlights} />
                 </>
@@ -50,7 +44,7 @@ export const ItemsList: React.FC<IItemsListProps> = ({ title, data }) => {
                   })
                 }
               >
-                Show Item
+                <FormattedMessage id='app.itemsList.card.button' />
               </Button>
             </CardActions>
           </Card>

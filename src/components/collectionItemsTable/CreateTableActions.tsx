@@ -7,10 +7,12 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { GridActionsCellItem, GridRowId, GridRowParams } from '@mui/x-data-grid'
+import { useIntl } from 'react-intl'
 
 export const TableActions = (params: GridRowParams, isVisible: boolean) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const intl = useIntl()
   const { user } = useAppSelector((state) => state.auth)
 
   function handleClickShowItemDetails(id: GridRowId) {
@@ -37,7 +39,7 @@ export const TableActions = (params: GridRowParams, isVisible: boolean) => {
     isVisible && (
       <GridActionsCellItem
         icon={<EditIcon fontSize='small' />}
-        label='Edit'
+        label={intl.formatMessage({ id: 'app.collection.itemsTable.actions.button.edit' })}
         onClick={() => handleClickEditItem(params.id)}
         showInMenu
       />
@@ -45,7 +47,7 @@ export const TableActions = (params: GridRowParams, isVisible: boolean) => {
     isVisible && (
       <GridActionsCellItem
         icon={<DeleteIcon fontSize='small' />}
-        label='Delete'
+        label={intl.formatMessage({ id: 'app.collection.itemsTable.actions.button.delete' })}
         onClick={() => handleClickDeleteItem(params.id)}
         showInMenu
       />

@@ -15,6 +15,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { FormattedMessage } from 'react-intl'
 
 export function CollectionDetails() {
   const { collectionId } = useParams()
@@ -56,7 +57,7 @@ export function CollectionDetails() {
         {isOwnerOrAdmin && (
           <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
             <Button variant='contained' onClick={() => navigate('edit')}>
-              Edit collection
+              <FormattedMessage id='app.buttons.editCollection' />
             </Button>
             <IconButton aria-label='delete' onClick={onDeleteCollection}>
               <DeleteIcon />
@@ -84,7 +85,7 @@ export function CollectionDetails() {
       {(isLoadingItems || isLoadingCollections) && <Spinner />}
       {error && <Alert severity='error'>{error.message}</Alert>}
       <Button variant='contained' onClick={() => navigate('createItem')} disabled={!isOwnerOrAdmin}>
-        Add new item
+        <FormattedMessage id='app.buttons.addItem' />
       </Button>
       {items && (
         <CollectionItemsTable

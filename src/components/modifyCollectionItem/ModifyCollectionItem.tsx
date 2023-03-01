@@ -17,6 +17,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import { v4 as uuidv4 } from 'uuid'
 import { fetchTagsByQuery } from '../../api/fetchTagsByQuery'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   header,
@@ -29,6 +30,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   const { collectionId, itemId } = useParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const intl = useIntl()
 
   const { additionalFields, handleChangeAdditionalField } = useAdditionalFields(extraFields)
   const { user } = useAppSelector((state) => state.auth)
@@ -104,12 +106,11 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
         <FormProvider {...methods}>
           <TextField
             {...register('title')}
-            label={'Title'}
+            label={intl.formatMessage({ id: 'app.collectionItem.formFields.title' })}
             type={'text'}
             variant='outlined'
             autoComplete='off'
           />
-
           <Autocomplete
             {...register('tags')}
             sx={{ width: '100%', '& .MuiSvgIcon-root': { color: '#ffffff' } }}
@@ -126,10 +127,18 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
                 </li>
               )
             }}
-            renderInput={(params) => <TextField {...params} label='Tags' />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={intl.formatMessage({ id: 'app.collectionItem.formFields.tags' })}
+              />
+            )}
             onChange={(_, newValue) => setValue('tags', newValue)}
           />
         </FormProvider>
+        <Typography variant='h6' component='h6' align='center'>
+          <FormattedMessage id='app.collectionItem.additionalFields.title' />
+        </Typography>
         {additionalFields.map((field, i) => (
           <Box
             key={i}
@@ -149,7 +158,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
           disabled={!formState.isValid || !isFilledAdditionalFields}
           sx={{ alignSelf: 'flex-end' }}
         >
-          Save
+          <FormattedMessage id='app.buttons.save' />
         </Button>
         {isLoading && <Spinner />}
       </Stack>

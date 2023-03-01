@@ -6,6 +6,7 @@ import { ItemsList } from '../components/itemsList/ItemsList'
 import { Spinner } from '../components/shared/spinner/Spinner'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { FormattedMessage } from 'react-intl'
 
 export const SearchResults = () => {
   const location = useLocation()
@@ -23,7 +24,7 @@ export const SearchResults = () => {
     <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', position: 'relative' }}>
       {isLoading && <Spinner />}
       <Typography>
-        {items.length} results for &quot;{query}&ldquo;
+        {items.length} <FormattedMessage id='app.main.search.subtitle' /> &quot;{query}&ldquo;
       </Typography>
       {!!items.length && <ItemsList data={items} />}
     </Box>

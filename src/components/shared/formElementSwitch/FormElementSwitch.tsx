@@ -43,7 +43,12 @@ export const FormElementSwitch: React.FC<IFormElementSwitchProps> = ({
             onChange={(event) => handleChange(field.id, event)}
             minRows={3}
             placeholder='Here you can write Markdown'
-            style={{ width: 'auto', resize: 'vertical' }}
+            style={{
+              width: 'auto',
+              resize: 'vertical',
+              backgroundColor: 'inherit',
+              color: 'inherit',
+            }}
             {...options}
           />
         )

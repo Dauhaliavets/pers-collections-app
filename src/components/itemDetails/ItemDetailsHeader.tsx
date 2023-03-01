@@ -7,6 +7,7 @@ import { PrevPageButton } from '../shared/buttons/PrevPageButton'
 import { LikeButton } from '../shared/buttons/LikeButton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { FormattedMessage } from 'react-intl'
 
 export const ItemDetailsHeader: React.FC<IItemDetailsHeaderProps> = ({ currentItem }) => {
   const { itemId } = useParams()
@@ -46,7 +47,9 @@ export const ItemDetailsHeader: React.FC<IItemDetailsHeaderProps> = ({ currentIt
         <PrevPageButton />
         <LikeButton isLiked={isLiked} onClick={onChangeLike} />
       </Box>
-      <Typography align='center'>Collection Item Details</Typography>
+      <Typography align='center' variant='h5' component='h4'>
+        <FormattedMessage id='app.collectionItemDetails.title' />
+      </Typography>
     </>
   )
 }

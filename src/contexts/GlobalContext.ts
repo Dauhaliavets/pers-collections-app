@@ -1,8 +1,9 @@
 import { createContext } from 'react'
-import { Locales, TGlobalContext } from '../models/GlobalContextModel'
+import { TGlobalContext } from '../models/GlobalContextModel'
+import { Locales } from '../models/Locale.model'
 
 const defaultGlobalContext = {
-  locale: Locales.EN,
+  locale: Locales.En,
   setLocale: () => {},
 }
 

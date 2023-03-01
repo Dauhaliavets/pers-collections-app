@@ -26,7 +26,7 @@ export const HeaderDrawer: React.FC = () => {
   }
 
   return (
-    <>
+    <Box sx={{ display: 'flex', order: { sm: 2, xs: 1 } }}>
       <IconButton sx={{ marginLeft: '10px' }} onClick={toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
@@ -49,6 +49,6 @@ export const HeaderDrawer: React.FC = () => {
           <AuthOptions toggleDrawer={toggleDrawer} />
         </Box>
       </Drawer>
-    </>
+    </Box>
   )
 }
