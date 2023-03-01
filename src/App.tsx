@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Locales, Themes } from './models/GlobalContextModel'
+import { Locales } from './models/GlobalContextModel'
 import { GlobalContext } from './contexts/GlobalContext'
 import store from './store'
 
@@ -21,56 +21,63 @@ import { CreateCollectionItem } from './pages/CreateCollectionItem'
 import { EditCollectionItem } from './pages/EditCollectionItem'
 import { SearchResults } from './pages/SearchResults'
 import { Collections } from './pages/Collections'
-
 import Container from '@mui/material/Container'
+import { ThemeProvider } from '@mui/material/styles'
+import { ColorModeContext, useThemeMode } from './hooks/useTheme'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
-  const [theme, setTheme] = React.useState<Themes>(
-    (localStorage.getItem('theme') as Themes) || Themes.Light,
-  )
+  const { theme, colorMode } = useThemeMode()
+
   const [locale, setLocale] = React.useState<Locales>(
     (localStorage.getItem('locale') as Locales) || Locales.EN,
   )
+
   return (
-    <Provider store={store}>
-      <GlobalContext.Provider value={{ theme, setTheme, locale, setLocale }}>
-        <BrowserRouter>
-          <Header />
-          <Container
-            maxWidth='xl'
-            sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}
-          >
-            <Routes>
-              <Route path='/' element={<Welcome />} />
-              <Route path='auth' element={<Auth />}>
-                <Route path='login' element={<LoginForm />} />
-                <Route path='signup' element={<SignUpForm />} />
-              </Route>
-              <Route path='home' element={<HomePage />} />
-              <Route path='search' element={<SearchResults />} />
-              <Route path='collections' element={<Collections />} />
-              <Route path='collections/owner/:ownerId' element={<UserCollections />} />
-              <Route path='collections/create' element={<CreateCollection />} />
-              <Route path='collections/:collectionId' element={<CollectionDetails />} />
-              <Route path='collections/:collectionId/edit' element={<EditCollection />} />
-              <Route
-                path='collections/:collectionId/createItem'
-                element={<CreateCollectionItem />}
-              />
-              <Route
-                path='collections/:collectionId/items/:itemId'
-                element={<CollectionItemDetails />}
-              />
-              <Route
-                path='collections/:collectionId/items/:itemId/edit'
-                element={<EditCollectionItem />}
-              />
-              <Route path='users' element={<AdminPage />} />
-            </Routes>
-          </Container>
-        </BrowserRouter>
-      </GlobalContext.Provider>
-    </Provider>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <GlobalContext.Provider value={{ locale, setLocale }}>
+            <BrowserRouter>
+              <CssBaseline />
+              <Header />
+              <Container
+                maxWidth='xl'
+                sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}
+              >
+                <Routes>
+                  <Route path='/' element={<Welcome />} />
+                  <Route path='auth' element={<Auth />}>
+                    <Route path='login' element={<LoginForm />} />
+                    <Route path='signup' element={<SignUpForm />} />
+                  </Route>
+                  <Route path='home' element={<HomePage />} />
+                  <Route path='search' element={<SearchResults />} />
+                  <Route path='collections' element={<Collections />} />
+                  <Route path='collections/owner/:ownerId' element={<UserCollections />} />
+                  <Route path='collections/create' element={<CreateCollection />} />
+                  <Route path='collections/:collectionId' element={<CollectionDetails />} />
+                  <Route path='collections/:collectionId/edit' element={<EditCollection />} />
+                  <Route
+                    path='collections/:collectionId/createItem'
+                    element={<CreateCollectionItem />}
+                  />
+                  <Route
+                    path='collections/:collectionId/items/:itemId'
+                    element={<CollectionItemDetails />}
+                  />
+                  <Route
+                    path='collections/:collectionId/items/:itemId/edit'
+                    element={<EditCollectionItem />}
+                  />
+                  <Route path='users' element={<AdminPage />} />
+                </Routes>
+              </Container>
+            </BrowserRouter>
+          </GlobalContext.Provider>
+        </Provider>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   )
 }
 

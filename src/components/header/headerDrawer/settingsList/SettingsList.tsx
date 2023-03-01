@@ -1,20 +1,23 @@
 import React from 'react'
 import { GlobalContext } from '../../../../contexts/GlobalContext'
-import { Locales, Themes, TLocale } from '../../../../models/GlobalContextModel'
+import { Locales, TLocale } from '../../../../models/GlobalContextModel'
+import { Themes } from '../../../../models/Theme.model'
 import { MaterialUISwitch } from '../../../shared/switch/materialUIswitch'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import { useTheme } from '@mui/material/styles'
+import { ColorModeContext } from '../../../../hooks/useTheme'
 
 export const SettingsList = () => {
-  const { theme, setTheme, locale, setLocale } = React.useContext(GlobalContext)
+  const { locale, setLocale } = React.useContext(GlobalContext)
+  const theme = useTheme()
+  const colorMode = React.useContext(ColorModeContext)
 
-  const handleChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const theme = event.target.checked ? Themes.Dark : Themes.Light
-    setTheme(theme)
-    localStorage.setItem('theme', theme)
+  const handleChangeTheme = () => {
+    colorMode.toggleColorMode()
   }
 
   const handleChangeLocale = (event: SelectChangeEvent) => {
@@ -28,7 +31,7 @@ export const SettingsList = () => {
         <ListItemText primary={'Theme'} />
         <MaterialUISwitch
           sx={{ m: 1 }}
-          checked={theme === Themes.Dark ? true : false}
+          checked={theme.palette.mode === Themes.Dark ? true : false}
           onChange={handleChangeTheme}
         />
       </ListItem>
