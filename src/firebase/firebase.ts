@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAGUO097c5VX261_I_uM9VHxbd0L1sZHjU',
-  authDomain: 'personal-collections-app.firebaseapp.com',
-  projectId: 'personal-collections-app',
-  storageBucket: 'personal-collections-app.appspot.com',
-  messagingSenderId: '764810995596',
-  appId: '1:764810995596:web:476051fc856cc2430458a9',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
 
 export const app = initializeApp(firebaseConfig)
