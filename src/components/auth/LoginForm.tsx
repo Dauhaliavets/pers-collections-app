@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
+import { FormattedMessage, useIntl } from 'react-intl'
+import { GoogleAuthButton } from './GoogleAuthButton'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { logIn } from '../../store/slices/authSlice/authSlice'
 import { authFormValidationRules } from '../../constants/authFormValidationRules'
@@ -11,7 +13,6 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { FormattedMessage, useIntl } from 'react-intl'
 
 export const LoginForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
@@ -70,6 +71,7 @@ export const LoginForm: React.FC = () => {
       </Button>
       {isLoading && <Spinner />}
       {error && <Alert severity='error'>{error.message}</Alert>}
+      <GoogleAuthButton />
     </Stack>
   )
 }

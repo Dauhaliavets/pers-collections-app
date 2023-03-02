@@ -22,4 +22,8 @@ type SignUpRequest = {
   password: string
 }
 
-export type { AuthState, IRejectValue, LoginRequest, SignUpRequest }
+type AuthWithGoogleRequest = {
+  credential: string
+}
+
+export type { AuthState, IRejectValue, LoginRequest, SignUpRequest, AuthWithGoogleRequest }

@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice/authSlice'
+import { GoogleAuthButton } from './GoogleAuthButton'
 import { authFormValidationRules } from '../../constants/authFormValidationRules'
 import { SignUpInputs } from './authForm.types'
 import { Spinner } from '../shared/spinner/Spinner'
@@ -11,7 +13,6 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { FormattedMessage, useIntl } from 'react-intl'
 
 export const SignUpForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
@@ -77,6 +78,7 @@ export const SignUpForm: React.FC = () => {
       </Button>
       {isLoading && <Spinner />}
       {error && <Alert severity='error'>error.message</Alert>}
+      <GoogleAuthButton />
     </Stack>
   )
 }
