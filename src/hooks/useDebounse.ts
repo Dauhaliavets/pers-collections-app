@@ -14,17 +14,3 @@ function useDebounce<T>(value: T, delay: number) {
 }
 
 export { useDebounce }
-
-// React.useEffect(() => {
-//   if (debouncedQuery) {
-//     setLoading(true)
-//     fetchItemsByQuery(debouncedQuery).then((results) => {
-//       setLoading(false)
-//       console.log('results: ', results)
-//       setOptions(results)
-//     })
-//   } else {
-//     setOptions([])
-//     setLoading(false)
-//   }
-// }, [debouncedQuery])

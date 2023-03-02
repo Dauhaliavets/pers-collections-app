@@ -26,7 +26,7 @@ export const SearchResults = () => {
       <Typography>
         {items.length} <FormattedMessage id='app.main.search.subtitle' /> &quot;{query}&ldquo;
       </Typography>
-      {!!items.length && <ItemsList data={items} />}
+      {!isLoading && !!items.length && <ItemsList data={items} />}
     </Box>
   )
 }

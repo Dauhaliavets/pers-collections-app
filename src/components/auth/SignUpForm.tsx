@@ -4,7 +4,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { signUp } from '../../store/slices/authSlice/authSlice'
-import { GoogleAuthButton } from './GoogleAuthButton'
+import { GoogleAuthButton } from '../shared/buttons/GoogleAuthButton'
 import { authFormValidationRules } from '../../constants/authFormValidationRules'
 import { SignUpInputs } from './authForm.types'
 import { Spinner } from '../shared/spinner/Spinner'
@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
 export const SignUpForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
@@ -30,7 +31,7 @@ export const SignUpForm: React.FC = () => {
 
   const {
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitted },
   } = methods
 
   const onSubmit: SubmitHandler<SignUpInputs> = (fields) => {
@@ -44,13 +45,7 @@ export const SignUpForm: React.FC = () => {
   }, [isAuth])
 
   return (
-    <Stack
-      py={4}
-      spacing={3}
-      component={'form'}
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{ position: 'relative' }}
-    >
+    <Stack py={4} spacing={2} component={'form'} onSubmit={handleSubmit(onSubmit)}>
       <Typography variant='h4' component='h4' textAlign={'center'}>
         <FormattedMessage id='app.auth.signUp.title' />
       </Typography>
@@ -77,7 +72,10 @@ export const SignUpForm: React.FC = () => {
         <FormattedMessage id='app.buttons.signup' />
       </Button>
       {isLoading && <Spinner />}
-      {error && <Alert severity='error'>error.message</Alert>}
+      {isSubmitted && error && <Alert severity='error'>error.message</Alert>}
+      <Divider>
+        <FormattedMessage id='app.auth.form.devider' />
+      </Divider>
       <GoogleAuthButton />
     </Stack>
   )

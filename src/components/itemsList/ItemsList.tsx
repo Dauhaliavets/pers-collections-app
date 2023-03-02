@@ -35,8 +35,9 @@ export const ItemsList: React.FC<IItemsListProps> = ({ data }) => {
                 {transformDate(item.createdAt)}
               </Typography>
             </CardContent>
-            <CardActions sx={{ justifyContent: 'center' }}>
+            <CardActions sx={{ padding: '16px', justifyContent: 'center' }}>
               <Button
+                variant='outlined'
                 size='small'
                 onClick={() =>
                   navigate(`/collections/${item.collectionId}/items/${item._id}`, {

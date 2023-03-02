@@ -27,17 +27,23 @@ export const CollectionAdditionalFields: React.FC<ICollectionAdditionalFieldsPro
   handleDeleteField,
 }) => {
   return (
-    <Grid container py={2} sx={{ width: '800px' }}>
+    <Grid container py={2} sx={{ width: { xs: '100%', sm: '600px', md: '800px' } }}>
       {additionalFields.map((field, i) => (
-        <Grid key={i} item container justifyContent='space-between'>
-          <Grid item xs={8}>
+        <Grid
+          key={i}
+          item
+          container
+          justifyContent='space-between'
+          sx={{ width: { xs: '100%', sm: '600px', md: '800px' } }}
+        >
+          <Grid item xs={12} sm={8}>
             <FormElementSwitch
               field={field}
               handleChange={handleChangeAdditionalField}
               options={{ disabled: true }}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={10} sm={3} sx={{ textAlign: { xs: 'end' } }}>
             <Checkbox
               id='isVisibleField'
               checked={field.visible}
@@ -52,7 +58,7 @@ export const CollectionAdditionalFields: React.FC<ICollectionAdditionalFieldsPro
             </label>
           </Grid>
           {action === 'create' && (
-            <Grid item>
+            <Grid item xs={2} sm={1} sx={{ textAlign: { xs: 'end' } }}>
               <IconButton onClick={() => handleDeleteField(field.id)}>
                 <DeleteIcon />
               </IconButton>

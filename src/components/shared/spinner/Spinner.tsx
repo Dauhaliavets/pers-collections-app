@@ -17,6 +17,7 @@ export const Spinner: React.FC<ISpinnerProps> = ({ size = 50 }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        background: 'transparent',
       }}
     >
       <CircularProgress size={size} />

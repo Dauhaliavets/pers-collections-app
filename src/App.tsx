@@ -6,7 +6,6 @@ import store from './store'
 import { ColorModeContext, useThemeMode } from './hooks/useTheme'
 import { IntlProvider } from 'react-intl'
 import { useLocale } from './hooks/useLocale'
-
 import { Header } from './components/header/Header'
 import { Auth } from './pages/Auth'
 import { LoginForm } from './components/auth/LoginForm'
@@ -42,7 +41,12 @@ function App() {
                 <Header />
                 <Container
                   maxWidth='xl'
-                  sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}
+                  sx={{
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '30px 16px',
+                  }}
                 >
                   <Routes>
                     <Route path='/' element={<Welcome />} />

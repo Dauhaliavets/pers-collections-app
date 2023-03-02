@@ -5,11 +5,11 @@ const getWidthFromItemType = (type: string): number => {
   switch (type) {
     case FieldType.Checkbox:
     case FieldType.Number:
-      return 80
-    case FieldType.Date:
       return 100
+    case FieldType.Date:
+      return 120
     default:
-      return 150
+      return 170
   }
 }
 

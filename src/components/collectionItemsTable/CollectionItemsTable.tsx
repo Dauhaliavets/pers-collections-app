@@ -30,10 +30,10 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
   const extraFieldsForColumns = getExtraFieldsForColumns(currentCollection)
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 250 },
+    { field: 'id', headerName: 'ID', width: 50 },
     { field: 'itemNumber', headerName: '#', width: 50 },
-    { field: 'title', headerName: 'Title', width: 120 },
-    { field: 'tags', headerName: 'Tags', width: 130 },
+    { field: 'title', headerName: 'Title', minWidth: 180, flex: 1 },
+    { field: 'tags', headerName: 'Tags', minWidth: 180, flex: 1 },
     { field: 'likes', headerName: 'Likes', type: 'number', width: 60 },
     {
       field: 'comments',
@@ -51,7 +51,7 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
   ]
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ minHeight: 425, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}

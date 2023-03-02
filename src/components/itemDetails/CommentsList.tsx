@@ -12,15 +12,18 @@ export const CommentsList: React.FC<ICommentListProps> = ({ currentItem }) => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexGrow: 1,
-        flexDirection: 'column',
-        width: '100%',
-        gap: 1,
+        width: { xs: '100%', sm: '580px' },
       }}
     >
       {comments && comments.length ? (
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+            flexDirection: 'column',
+            gap: 1,
+          }}
+        >
           <Typography align='center'>
             <FormattedMessage id='app.collectionItemDetails.comments.title' />
           </Typography>
@@ -31,7 +34,7 @@ export const CommentsList: React.FC<ICommentListProps> = ({ currentItem }) => {
                   <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
                     {comment.sender}
                   </Typography>
-                  <Typography variant='h5' component='div'>
+                  <Typography variant='h6' component='div'>
                     {comment.text}
                   </Typography>
                   <Typography align='right' color='text.secondary'>

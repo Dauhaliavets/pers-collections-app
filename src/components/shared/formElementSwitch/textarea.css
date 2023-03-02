@@ -1,0 +1,30 @@
+.textarea {
+  width: 600px;
+  resize: 'vertical';
+  background-color: 'inherit';
+  color: 'inherit';
+}
+
+@media (max-width: 900px) {
+  .textarea {
+    width: 470px;
+  }
+}
+
+@media (max-width: 600px) {
+  .textarea {
+    width: 370px;
+  }
+}
+
+@media (max-width: 530px) {
+  .textarea {
+    width: 270px;
+  }
+}
+
+@media (max-width: 420px) {
+  .textarea {
+    width: 170px;
+  }
+}

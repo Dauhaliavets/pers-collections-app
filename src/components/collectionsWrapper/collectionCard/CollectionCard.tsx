@@ -31,9 +31,6 @@ export const CollectionCard: React.FC<ICollectionCardProps> = ({ collection }) =
           <Typography variant='subtitle2' color='text.secondary'>
             {collection.topic}
           </Typography>
-          <Typography variant='body2' color='text.secondary'>
-            {collection.description}
-          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>

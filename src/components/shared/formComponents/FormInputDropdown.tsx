@@ -31,7 +31,7 @@ export const FormInputDropdown: React.FC<IFormInputTextProps> = ({
       control={control}
       rules={rules}
       render={({ field, fieldState: { error } }) => (
-        <FormControl sx={{ m: 1, minWidth: 120 }} size='small' error={!!error}>
+        <FormControl sx={{ m: 1, minWidth: 120 }} error={!!error}>
           <InputLabel id={name}>{label}</InputLabel>
           <Select {...field} id={name} label={label}>
             {generateSelectOptions()}

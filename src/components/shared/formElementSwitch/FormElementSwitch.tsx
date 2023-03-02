@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import './textarea.css'
 
 export const FormElementSwitch: React.FC<IFormElementSwitchProps> = ({
   field,
@@ -41,14 +42,9 @@ export const FormElementSwitch: React.FC<IFormElementSwitchProps> = ({
             id={field.id}
             value={field.value as string}
             onChange={(event) => handleChange(field.id, event)}
-            minRows={3}
+            minRows={4}
             placeholder='Here you can write Markdown'
-            style={{
-              width: 'auto',
-              resize: 'vertical',
-              backgroundColor: 'inherit',
-              color: 'inherit',
-            }}
+            className='textarea'
             {...options}
           />
         )

@@ -52,7 +52,7 @@ export const CommentForm: React.FC = () => {
   if (!isAuth)
     return (
       <Typography>
-        <FormattedMessage id='app.collectionItemDetails.comments.unauthorazedMessage' />
+        <FormattedMessage id='app.collectionItemDetails.comments.unauthorazedMessage' />{' '}
         <Link to={'/'}>
           <FormattedMessage id='app.collectionItemDetails.comments.unauthorazedMessage.link' />
         </Link>
@@ -63,7 +63,7 @@ export const CommentForm: React.FC = () => {
     <Box
       component={'form'}
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 400 }}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', sm: '600px' } }}
     >
       <FormProvider {...methods}>
         <FormInputTextarea

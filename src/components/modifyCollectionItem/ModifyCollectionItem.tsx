@@ -18,6 +18,7 @@ import TextField from '@mui/material/TextField'
 import { v4 as uuidv4 } from 'uuid'
 import { fetchTagsByQuery } from '../../api/fetchTagsByQuery'
 import { FormattedMessage, useIntl } from 'react-intl'
+import Container from '@mui/material/Container'
 
 export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   header,
@@ -90,78 +91,81 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   }
 
   return (
-    <Stack spacing={3} sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+    <Container maxWidth='xl' sx={{ padding: { xs: 0 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <PrevPageButton />
       </Box>
-      <Typography variant='h5' component='h5' align='center'>
-        {header}
-      </Typography>
-      <Stack
-        component={'form'}
-        onSubmit={handleSubmit(onSubmit)}
-        spacing={1}
-        sx={{ position: 'relative' }}
-      >
-        <FormProvider {...methods}>
-          <TextField
-            {...register('title')}
-            label={intl.formatMessage({ id: 'app.collectionItem.formFields.title' })}
-            type={'text'}
-            variant='outlined'
-            autoComplete='off'
-          />
-          <Autocomplete
-            {...register('tags')}
-            sx={{ width: '100%', '& .MuiSvgIcon-root': { color: '#ffffff' } }}
-            onInputChange={(_, newValue) => handleInputChange(newValue)}
-            multiple
-            freeSolo
-            clearOnBlur={false}
-            options={options}
-            getOptionLabel={(option) => option}
-            renderOption={(props, option) => {
-              return (
-                <li key={uuidv4()} {...props}>
-                  {option}
-                </li>
-              )
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={intl.formatMessage({ id: 'app.collectionItem.formFields.tags' })}
-              />
-            )}
-            onChange={(_, newValue) => setValue('tags', newValue)}
-          />
-        </FormProvider>
-        <Typography variant='h6' component='h6' align='center'>
-          <FormattedMessage id='app.collectionItem.additionalFields.title' />
-        </Typography>
-        {additionalFields.map((field, i) => (
-          <Box
-            key={i}
-            py={1}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <FormElementSwitch field={field} handleChange={handleChangeAdditionalField} />
-          </Box>
-        ))}
-        <Button
-          variant='contained'
-          type='submit'
-          disabled={!formState.isValid || !isFilledAdditionalFields}
-          sx={{ alignSelf: 'flex-end' }}
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Stack
+          mb={2}
+          spacing={2}
+          component={'form'}
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ width: { xs: '100%', sm: '600px', md: '800px' }, position: 'relative' }}
         >
-          <FormattedMessage id='app.buttons.save' />
-        </Button>
-        {isLoading && <Spinner />}
-      </Stack>
-    </Stack>
+          <Typography variant='h4' component='h4' align='center'>
+            {header}
+          </Typography>
+          <FormProvider {...methods}>
+            <TextField
+              {...register('title')}
+              label={intl.formatMessage({ id: 'app.collectionItem.formFields.title' })}
+              type={'text'}
+              variant='outlined'
+              autoComplete='off'
+            />
+            <Autocomplete
+              {...register('tags')}
+              sx={{ width: '100%', '& .MuiSvgIcon-root': { color: '#ffffff' } }}
+              onInputChange={(_, newValue) => handleInputChange(newValue)}
+              multiple
+              freeSolo
+              clearOnBlur={false}
+              options={options}
+              getOptionLabel={(option) => option}
+              renderOption={(props, option) => {
+                return (
+                  <li key={uuidv4()} {...props}>
+                    {option}
+                  </li>
+                )
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={intl.formatMessage({ id: 'app.collectionItem.formFields.tags' })}
+                />
+              )}
+              onChange={(_, newValue) => setValue('tags', newValue)}
+            />
+          </FormProvider>
+          <Typography variant='h6' component='h6' align='center'>
+            <FormattedMessage id='app.collectionItem.additionalFields.title' />
+          </Typography>
+          {additionalFields.map((field, i) => (
+            <Box
+              key={i}
+              py={1}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <FormElementSwitch field={field} handleChange={handleChangeAdditionalField} />
+            </Box>
+          ))}
+          <Button
+            variant='contained'
+            type='submit'
+            disabled={!formState.isValid || !isFilledAdditionalFields}
+            sx={{ alignSelf: 'flex-end' }}
+          >
+            <FormattedMessage id='app.buttons.save' />
+          </Button>
+          {isLoading && <Spinner />}
+        </Stack>
+      </Box>
+    </Container>
   )
 }

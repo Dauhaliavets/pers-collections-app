@@ -18,13 +18,13 @@ const createColumns = ({
     {
       field: 'name',
       headerName: intl.formatMessage({ id: 'app.adminPage.table.headerName.name' }),
-      minWidth: 150,
+      minWidth: 200,
       flex: 1,
     },
     {
       field: 'email',
       headerName: intl.formatMessage({ id: 'app.adminPage.table.headerName.email' }),
-      minWidth: 150,
+      minWidth: 200,
       flex: 1,
     },
     {

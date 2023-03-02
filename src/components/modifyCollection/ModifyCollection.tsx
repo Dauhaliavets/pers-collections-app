@@ -104,7 +104,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
   }
 
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth='xl' sx={{ padding: { xs: 0 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <PrevPageButton />
       </Box>
@@ -114,7 +114,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
           spacing={2}
           component={'form'}
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ width: '800px', position: 'relative' }}
+          sx={{ width: { xs: '100%', sm: '600px', md: '800px' }, position: 'relative' }}
         >
           <Typography variant='h4' component='h4' textAlign={'center'}>
             {header}
@@ -125,7 +125,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
               label={intl.formatMessage({ id: 'app.collection.formFields.title' })}
               rules={validationRules.title}
             />
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%', minHeight: '168px' }}>
               <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
                 <Tabs value={tabValue} onChange={handleChangeTabValue}>
                   <Tab
@@ -159,7 +159,7 @@ export const ModifyCollection: React.FC<IModifyCollection> = ({
           <DropZone imgUrl={imgUrl} setImgUrl={setImgUrl} />
           <Button variant='contained' type='submit' style={{ alignSelf: 'flex-end' }}>
             {action === 'create' ? (
-              <FormattedMessage id='app.buttons.editCollection' />
+              <FormattedMessage id='app.buttons.createCollection' />
             ) : (
               <FormattedMessage id='app.buttons.updateCollection' />
             )}

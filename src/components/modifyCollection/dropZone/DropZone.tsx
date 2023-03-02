@@ -54,7 +54,14 @@ export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
       border={1}
       borderColor={'#ccc'}
       borderRadius={2}
-      sx={{ ':hover': { cursor: 'pointer', border: '1px solid green' } }}
+      sx={{
+        display: 'flex',
+        flexDirection: isDragActive ? 'row' : 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100px',
+        ':hover': { cursor: 'pointer', border: '1px solid green' },
+      }}
       {...getRootProps()}
     >
       <input {...getInputProps()} />
@@ -73,7 +80,15 @@ export const DropZone: React.FC<IDropZoneProps> = ({ imgUrl, setImgUrl }) => {
         </Box>
       )}
       {imgUrl && (
-        <Box sx={{ display: 'flex', width: '380px', height: '210px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '380px',
+            height: '210px',
+          }}
+        >
           <img src={imgUrl} />
         </Box>
       )}

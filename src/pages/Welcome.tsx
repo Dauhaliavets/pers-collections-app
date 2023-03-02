@@ -11,10 +11,17 @@ export const Welcome: React.FC = () => {
 
   return (
     <Paper
-      sx={{ marginTop: '20px', width: '100%', maxWidth: '400px', padding: '20px' }}
-      elevation={3}
+      sx={{
+        marginTop: '20px',
+        width: '100%',
+        maxWidth: 'sm',
+        padding: '40px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+      elevation={2}
     >
-      <Stack spacing={2}>
+      <Stack spacing={2} width={300}>
         <Button variant='contained' onClick={() => navigate('auth/login')}>
           <FormattedMessage id='app.buttons.login' />
         </Button>

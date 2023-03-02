@@ -4,7 +4,7 @@ import { Container } from '@mui/material'
 
 export const Auth: React.FC = () => {
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='sm' sx={{ padding: { xs: 0, sm: 2 } }}>
       <Outlet />
     </Container>
   )

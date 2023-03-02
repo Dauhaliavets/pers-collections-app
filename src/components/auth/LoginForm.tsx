@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { GoogleAuthButton } from './GoogleAuthButton'
+import { GoogleAuthButton } from '../shared/buttons/GoogleAuthButton'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { logIn } from '../../store/slices/authSlice/authSlice'
 import { authFormValidationRules } from '../../constants/authFormValidationRules'
@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
 export const LoginForm: React.FC = () => {
   const { isAuth, isLoading, error } = useAppSelector((state) => state.auth)
@@ -29,7 +30,7 @@ export const LoginForm: React.FC = () => {
 
   const {
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitted },
   } = methods
 
   const onSubmit: SubmitHandler<LoginInputs> = (fields) => {
@@ -43,13 +44,7 @@ export const LoginForm: React.FC = () => {
   }, [isAuth])
 
   return (
-    <Stack
-      py={4}
-      spacing={2}
-      component={'form'}
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{ position: 'relative' }}
-    >
+    <Stack py={4} spacing={2} component={'form'} onSubmit={handleSubmit(onSubmit)}>
       <Typography variant='h4' component='h4' textAlign={'center'}>
         <FormattedMessage id='app.auth.loginForm.title' />
       </Typography>
@@ -70,7 +65,10 @@ export const LoginForm: React.FC = () => {
         <FormattedMessage id='app.buttons.login' />
       </Button>
       {isLoading && <Spinner />}
-      {error && <Alert severity='error'>{error.message}</Alert>}
+      {isSubmitted && error && <Alert severity='error'>{error.message}</Alert>}
+      <Divider>
+        <FormattedMessage id='app.auth.form.devider' />
+      </Divider>
       <GoogleAuthButton />
     </Stack>
   )

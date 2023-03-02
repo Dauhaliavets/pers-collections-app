@@ -11,7 +11,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 
 export const ItemDetailsTable: React.FC<IItemDetailsTableProps> = ({ currentItem }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ maxWidth: '800px' }}>
       <Table>
         <TableBody>
           <TableRow hover>
