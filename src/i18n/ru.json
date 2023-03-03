@@ -77,5 +77,6 @@
   "app.collectionItemDetails.comments.subtitle": "Комментариев нет",
   "app.itemsList.card.subtitle": "Совпадения",
   "app.itemsList.card.subtitle2": "Поле",
-  "app.itemsList.card.button": "Показать"
+  "app.itemsList.card.button": "Показать",
+  "app.nofFoundPage.text": "Здесь ничего нет: 404!"
 }

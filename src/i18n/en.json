@@ -77,5 +77,6 @@
   "app.collectionItemDetails.comments.subtitle": "No comments",
   "app.itemsList.card.subtitle": "Coincidances",
   "app.itemsList.card.subtitle2": "Field",
-  "app.itemsList.card.button": "Show"
+  "app.itemsList.card.button": "Show",
+  "app.nofFoundPage.text": "There's nothing here: 404!"
 }

@@ -20,6 +20,7 @@ import { Collections } from '../pages/Collections'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { ProtectedRoute } from './ProtectedRoute'
+import { NotFoundPage } from '../pages/NotFoundPage'
 
 export const AppRouter = () => {
   const { isAuth } = useAppSelector((state) => state.auth)
@@ -57,7 +58,7 @@ export const AppRouter = () => {
           <Route
             path='collections/create'
             element={
-              <ProtectedRoute isAuth={isAuth}>
+              <ProtectedRoute isAuth={isAuth} redirectPath={'/auth/login'}>
                 <CreateCollection />
               </ProtectedRoute>
             }
@@ -66,7 +67,7 @@ export const AppRouter = () => {
           <Route
             path='collections/:collectionId/edit'
             element={
-              <ProtectedRoute isAuth={isAuth}>
+              <ProtectedRoute isAuth={isAuth} redirectPath={'/auth/login'}>
                 <EditCollection />
               </ProtectedRoute>
             }
@@ -74,7 +75,7 @@ export const AppRouter = () => {
           <Route
             path='collections/:collectionId/createItem'
             element={
-              <ProtectedRoute isAuth={isAuth}>
+              <ProtectedRoute isAuth={isAuth} redirectPath={'/auth/login'}>
                 <CreateCollectionItem />
               </ProtectedRoute>
             }
@@ -86,7 +87,7 @@ export const AppRouter = () => {
           <Route
             path='collections/:collectionId/items/:itemId/edit'
             element={
-              <ProtectedRoute isAuth={isAuth}>
+              <ProtectedRoute isAuth={isAuth} redirectPath={'/auth/login'}>
                 <EditCollectionItem />
               </ProtectedRoute>
             }
@@ -94,11 +95,12 @@ export const AppRouter = () => {
           <Route
             path='users'
             element={
-              <ProtectedRoute isAuth={isAuth}>
+              <ProtectedRoute isAuth={isAuth} redirectPath={'/auth/login'}>
                 <AdminPage />
               </ProtectedRoute>
             }
           />
+          <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </Container>
     </BrowserRouter>

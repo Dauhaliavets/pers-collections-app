@@ -13,7 +13,7 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   children,
 }): JSX.Element => {
   if (!isAuth) {
-    return <Navigate to={redirectPath} replace />
+    return <Navigate to={redirectPath} relative={'path'} />
   }
 
   return children
