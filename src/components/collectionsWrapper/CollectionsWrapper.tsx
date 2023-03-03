@@ -30,7 +30,7 @@ export const CollectionsWrapper: React.FC<ICollectionsWrapperProps> = ({
           </Grid>
         ))}
       </Grid>
-      {isLoading && <Spinner size={100} />}
+      {isLoading && <Spinner size={50} />}
       {error && <Alert severity='error'>{error.message}</Alert>}
     </>
   )

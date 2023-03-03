@@ -31,7 +31,7 @@ export const CloudTags: React.FC<ICloudTagsProps> = ({ title }) => {
       <Typography variant='h5' component='h4'>
         {title}
       </Typography>
-      {loading && <Spinner size={30} />}
+      {loading && <Spinner size={50} />}
       {tags && <TagCloud minSize={16} maxSize={36} tags={tags} onClick={onClick} />}
     </>
   )
