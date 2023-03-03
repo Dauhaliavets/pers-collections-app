@@ -51,21 +51,25 @@ export const CollectionItemsTable: React.FC<ICollectionItemsProps> = ({
   ]
 
   return (
-    <div style={{ minHeight: 425, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        components={{
-          Toolbar: CustomToolbar,
-          BooleanCellFalseIcon: CellValueFalseIcon,
-          BooleanCellTrueIcon: CellValueTrueIcon,
-        }}
-        columnVisibilityModel={{
-          id: false,
-        }}
-      />
-    </div>
+    <DataGrid
+      rows={rows}
+      columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      components={{
+        Toolbar: CustomToolbar,
+        BooleanCellFalseIcon: CellValueFalseIcon,
+        BooleanCellTrueIcon: CellValueTrueIcon,
+      }}
+      columnVisibilityModel={{
+        id: false,
+      }}
+      autoHeight
+      sx={{
+        '& ::-webkit-scrollbar': { height: 8 },
+        '& ::-webkit-scrollbar-track': { background: 'inherit' },
+        '& ::-webkit-scrollbar-thumb': { background: '#b3b3b3', borderRadius: 4 },
+      }}
+    />
   )
 }

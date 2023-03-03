@@ -1,23 +1,11 @@
 import React from 'react'
-
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Checkbox from '@mui/material/Checkbox'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { FormElementSwitch } from '../../shared/formElementSwitch/FormElementSwitch'
-import { IAdditionalField } from '../../../models/additionalField.model'
 import { FormattedMessage } from 'react-intl'
-
-interface ICollectionAdditionalFieldsProps {
-  action: 'create' | 'edit'
-  additionalFields: IAdditionalField[]
-  handleChangeAdditionalField: (
-    fieldId: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void
-  handleChangeIsVisible: (event: React.ChangeEvent<HTMLInputElement>, fieldId: string) => void
-  handleDeleteField: (fieldId: string) => void
-}
+import { ICollectionAdditionalFieldsProps } from './CollectionAdditionalFileds.types'
 
 export const CollectionAdditionalFields: React.FC<ICollectionAdditionalFieldsProps> = ({
   action,

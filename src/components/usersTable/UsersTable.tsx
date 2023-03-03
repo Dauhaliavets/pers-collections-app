@@ -59,18 +59,22 @@ export const UsersTable: React.FC<IUsersTableProps> = ({ currentUser, users }) =
   })
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        getRowId={(row) => row.id}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        columnVisibilityModel={{
-          id: false,
-        }}
-        disableSelectionOnClick
-      />
-    </div>
+    <DataGrid
+      rows={rows}
+      columns={columns}
+      getRowId={(row) => row.id}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      autoHeight
+      columnVisibilityModel={{
+        id: false,
+      }}
+      disableSelectionOnClick
+      sx={{
+        '& ::-webkit-scrollbar': { height: 8 },
+        '& ::-webkit-scrollbar-track': { background: 'inherit' },
+        '& ::-webkit-scrollbar-thumb': { background: '#b3b3b3', borderRadius: 4 },
+      }}
+    />
   )
 }

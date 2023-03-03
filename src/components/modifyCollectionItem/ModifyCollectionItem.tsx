@@ -4,21 +4,18 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { createItem, updateItemById } from '../../store/slices/itemsSlice/itemsSlice'
 import { useAdditionalFields } from '../../hooks/useAdditionalFileds'
+import { FormattedMessage } from 'react-intl'
 import { IModifyCollectionItemProps, MainFields } from './modifyCollectionItem.types'
 import { CheckFilledAdditionalFields } from '../../utils/checkFilledAdditionalFields'
 import { PrevPageButton } from '../shared/buttons/PrevPageButton'
-import { FormElementSwitch } from '../shared/formElementSwitch/FormElementSwitch'
 import { Spinner } from '../shared/spinner/Spinner'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
-import { v4 as uuidv4 } from 'uuid'
-import { fetchTagsByQuery } from '../../api/fetchTagsByQuery'
-import { FormattedMessage, useIntl } from 'react-intl'
 import Container from '@mui/material/Container'
+import { CollectionItemAdditionalFields } from './CollectionItemAdditionalFields'
+import { CollectionItemForm } from './CollectionItemForm'
 
 export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   header,
@@ -27,11 +24,9 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
   tags = [],
   extraFields = [],
 }) => {
-  const [options, setOptions] = React.useState<string[]>([])
   const { collectionId, itemId } = useParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const intl = useIntl()
 
   const { additionalFields, handleChangeAdditionalField } = useAdditionalFields(extraFields)
   const { user } = useAppSelector((state) => state.auth)
@@ -46,7 +41,7 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
     },
   })
 
-  const { handleSubmit, formState, register, getValues, setValue } = methods
+  const { handleSubmit, formState, getValues } = methods
 
   const onSubmit: SubmitHandler<MainFields> = () => {
     const [title, tags] = getValues(['title', 'tags'])
@@ -80,16 +75,6 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
     }
   }
 
-  const handleInputChange = async (value: string) => {
-    if (value.length > 2) {
-      const tags = await fetchTagsByQuery(value)
-      const filterTags = [...new Set(tags)]
-      setOptions(filterTags)
-    } else {
-      setOptions([])
-    }
-  }
-
   return (
     <Container maxWidth='xl' sx={{ padding: { xs: 0 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -107,54 +92,15 @@ export const ModifyCollectionItem: React.FC<IModifyCollectionItemProps> = ({
             {header}
           </Typography>
           <FormProvider {...methods}>
-            <TextField
-              {...register('title')}
-              label={intl.formatMessage({ id: 'app.collectionItem.formFields.title' })}
-              type={'text'}
-              variant='outlined'
-              autoComplete='off'
-            />
-            <Autocomplete
-              {...register('tags')}
-              sx={{ width: '100%', '& .MuiSvgIcon-root': { color: '#ffffff' } }}
-              onInputChange={(_, newValue) => handleInputChange(newValue)}
-              multiple
-              freeSolo
-              clearOnBlur={false}
-              options={options}
-              getOptionLabel={(option) => option}
-              renderOption={(props, option) => {
-                return (
-                  <li key={uuidv4()} {...props}>
-                    {option}
-                  </li>
-                )
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={intl.formatMessage({ id: 'app.collectionItem.formFields.tags' })}
-                />
-              )}
-              onChange={(_, newValue) => setValue('tags', newValue)}
-            />
+            <CollectionItemForm />
           </FormProvider>
           <Typography variant='h6' component='h6' align='center'>
             <FormattedMessage id='app.collectionItem.additionalFields.title' />
           </Typography>
-          {additionalFields.map((field, i) => (
-            <Box
-              key={i}
-              py={1}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <FormElementSwitch field={field} handleChange={handleChangeAdditionalField} />
-            </Box>
-          ))}
+          <CollectionItemAdditionalFields
+            additionalFields={additionalFields}
+            onChange={handleChangeAdditionalField}
+          />
           <Button
             variant='contained'
             type='submit'
